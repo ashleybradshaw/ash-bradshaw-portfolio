@@ -1,0 +1,41 @@
+@import "tailwindcss";
+@config "../tailwind.config.ts";
+
+:root {
+  --wild-bg: #ff0e00;
+  --wild-text: #13014c;
+  --calm-bg: #f7f6f9;
+  --calm-text: #0a0127;
+}
+
+@theme inline {
+  --color-brand-red: var(--wild-bg);
+  --color-brand-blue: var(--wild-text);
+  --color-electric-red: #d40b00;
+  --color-deep-blue: #20086b;
+  --color-calm-light: var(--calm-bg);
+  --color-calm-gray: #e8e6f0;
+  --color-dark: var(--calm-text);
+  --color-light: #ffffff;
+  --color-accent-cream: #fff9e6;
+  --font-display: var(--font-palanquin-dark);
+  --font-body: var(--font-plus-jakarta);
+  --font-sans: var(--font-plus-jakarta);
+}
+
+* {
+  transition:
+    background-color 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 400ms ease;
+}
+
+html {
+  background-color: var(--calm-bg);
+  color: var(--calm-text);
+}
+
+body {
+  background-color: var(--calm-bg);
+  color: var(--calm-text);
+  font-family: var(--font-plus-jakarta), sans-serif;
+}

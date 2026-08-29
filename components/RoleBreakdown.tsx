@@ -188,7 +188,7 @@ function RoleItem({
       </div>
 
       <div aria-hidden="true" className="py-5">
-        <div className="h-px w-full border-t-2 border-dashed border-taupe" />
+        <div className="h-px w-full border-t-2 border-dotted border-taupe" />
       </div>
     </article>
   );

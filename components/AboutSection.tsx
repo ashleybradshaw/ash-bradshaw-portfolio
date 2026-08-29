@@ -43,26 +43,28 @@ export function AboutSection() {
             <h3 className="font-display text-base font-bold uppercase leading-6 tracking-[-0.01em] text-text-dark">
               Foundations &amp; Origins
             </h3>
-            <p className="font-sans text-[28px] font-bold leading-9 tracking-[-0.01em] text-text-dark">
-              The Curious Catalyst
-            </p>
-            <p className="font-sans text-base font-bold leading-6 tracking-[-0.01em] text-text-dark">
-              It started by taking hardware apart and never quite getting it
-              back together—a fixation on mechanisms that quickly turned into
-              asking uncomfortable questions until the underlying logic
-              revealed itself. Hands-on production across radio, TV, web, and
-              animation gave that curiosity real tools, while a First-Class
-              degree in Marketing &amp; Brand Management at Leeds anchored it
-              in human behavior.
-            </p>
-            <p className="font-sans text-base font-bold leading-6 tracking-[-0.01em] text-text-dark">
-              From early creative direction for global brands to running
-              multidisciplinary product studios, design was never just visual
-              presentation—it was full-stack problem solving and system
-              architecture. Every build I ship today is governed by four core
-              operational pillars: empathy, accessibility, value exchange, and
-              long-term aftercare.
-            </p>
+            <div className="flex w-full flex-col space-y-6">
+              <p className="font-sans text-base font-bold leading-6 tracking-[-0.01em] text-text-dark">
+                It started by taking hardware apart and never quite getting it
+                back together, a fixation on mechanisms that quickly turned
+                into asking uncomfortable questions until the underlying logic
+                revealed itself.
+              </p>
+              <p className="font-sans text-base font-bold leading-6 tracking-[-0.01em] text-text-dark">
+                Hands-on production across radio, TV, web, and animation gave
+                that curiosity real tools, while a First-Class degree in
+                Marketing &amp; Brand Management at Leeds anchored it in human
+                behavior.
+              </p>
+              <p className="font-sans text-base font-bold leading-6 tracking-[-0.01em] text-text-dark">
+                From early creative direction for global brands to running
+                multidisciplinary product studios, design was never just visual
+                presentation, it was full-stack problem solving and system
+                architecture. Every build I ship today is governed by four core
+                operational pillars: empathy, accessibility, value exchange, and
+                long-term aftercare.
+              </p>
+            </div>
           </div>
 
           <div className="w-full max-w-[620px] shrink-0 lg:pt-5">

@@ -2,22 +2,42 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
-import { Atom, Menu, X } from "lucide-react";
-import { Button } from "@/components/Button";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { usePathname } from "next/navigation";
+import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import { BrandMark } from "@/components/BrandMark";
 
-type NavLink = {
+type NavItem = {
   href: string;
   label: string;
+  external?: boolean;
 };
 
-const navLinks: readonly NavLink[] = [
-  { href: "/works", label: "Works" },
-  { href: "/story", label: "Story" },
-  { href: "/services", label: "Services" },
-  { href: "/about", label: "About" },
+const primaryLinks: readonly NavItem[] = [
+  { href: "#works", label: "Works" },
+  { href: "#story", label: "Story" },
+  { href: "#services", label: "Services" },
+  { href: "#about", label: "About" },
   { href: "/field-notes", label: "Field Notes" },
+];
+
+const secondaryLinks: readonly NavItem[] = [
+  {
+    href: "https://www.linkedin.com/in/ashleyjohnbradshaw/",
+    label: "Linkedin",
+    external: true,
+  },
+  {
+    href: "https://github.com/ashleybradshaw",
+    label: "Github",
+    external: true,
+  },
+  {
+    href: "https://x.com/ashjonbradshaw",
+    label: "X",
+    external: true,
+  },
+  { href: "#availability", label: "Availability" },
 ];
 
 const overlayVariants = {
@@ -45,11 +65,143 @@ const itemVariants = {
   },
 };
 
-const linkClassName =
-  "font-sans text-base font-bold uppercase leading-6 tracking-[-0.01em] text-brand-blue focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-calm-light";
+const pillSpring = {
+  type: "spring" as const,
+  stiffness: 420,
+  damping: 34,
+  mass: 0.45,
+};
+
+function resolveHref(item: NavItem) {
+  return item.href.startsWith("#") ? `/${item.href}` : item.href;
+}
+
+function NavAnchor({
+  item,
+  className,
+  onClick,
+}: {
+  item: NavItem;
+  className: string;
+  onClick?: () => void;
+}) {
+  const href = resolveHref(item);
+
+  if (item.external) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={className}
+        onClick={onClick}
+      >
+        {item.label}
+      </a>
+    );
+  }
+
+  if (!href.includes("#")) {
+    return (
+      <Link href={href} onClick={onClick} className={className}>
+        {item.label}
+      </Link>
+    );
+  }
+
+  return (
+    <a href={href} className={className} onClick={onClick}>
+      {item.label}
+    </a>
+  );
+}
+
+function NavCluster({
+  items,
+  hovered,
+  onHover,
+  pillClassName,
+  linkClassName,
+}: {
+  items: readonly NavItem[];
+  hovered: string | null;
+  onHover: (href: string | null) => void;
+  pillClassName: string;
+  linkClassName: string;
+}) {
+  return (
+    <ul className="flex items-center gap-1">
+      {items.map((item) => (
+        <li
+          key={item.href}
+          className="relative"
+          onMouseEnter={() => onHover(item.href)}
+          onFocusCapture={() => onHover(item.href)}
+        >
+          {hovered === item.href ? (
+            <motion.span
+              layoutId="nav-hover-pill"
+              className={`${pillClassName} pointer-events-none`}
+              transition={pillSpring}
+            />
+          ) : null}
+          <NavAnchor item={item} className={linkClassName} />
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 export function Nav() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hovered, setHovered] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 12);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const inkClassName = isHome
+    ? "text-brand-blue"
+    : "text-text-dark";
+
+  const headerClassName = [
+    "fixed top-0 left-0 z-50 w-full transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+    inkClassName,
+    scrolled || !isHome
+      ? "border-b border-brand-blue/10 bg-cream-1/75 shadow-[0_8px_30px_rgb(10_1_39/0.06)] backdrop-blur-xl"
+      : "border-b border-transparent bg-transparent",
+  ].join(" ");
+
+  const logoClassName =
+    "flex shrink-0 items-center font-display text-base font-bold uppercase leading-6 tracking-[-0.01em] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-cream-1";
+
+  const linkClassName =
+    "relative z-10 inline-flex px-3 py-1.5 font-sans text-base font-bold uppercase leading-6 tracking-[-0.01em] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2";
+
+  const pillClassName =
+    scrolled || !isHome
+      ? "absolute inset-0 rounded-full bg-brand-blue/10"
+      : "absolute inset-0 rounded-full bg-cream-1/60";
+
+  const menuButtonClassName =
+    "inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2 lg:hidden";
+
+  const overlayClassName = isHome
+    ? "fixed inset-0 z-40 flex flex-col bg-brand-red text-brand-blue lg:hidden"
+    : "fixed inset-0 z-40 flex flex-col bg-cream-1 text-text-dark lg:hidden";
+
+  const mobileLinkClassName = isHome
+    ? "font-display text-3xl font-bold uppercase tracking-[-0.02em] text-brand-blue focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-cream-1 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-red"
+    : "font-display text-3xl font-bold uppercase tracking-[-0.02em] text-text-dark focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-cream-1";
 
   useEffect(() => {
     if (!isOpen) {
@@ -62,7 +214,7 @@ export function Nav() {
       }
     };
 
-    const media = window.matchMedia("(min-width: 768px)");
+    const media = window.matchMedia("(min-width: 1024px)");
     const onViewportChange = (event: MediaQueryListEvent) => {
       if (event.matches) {
         setIsOpen(false);
@@ -82,47 +234,52 @@ export function Nav() {
   }, [isOpen]);
 
   const closeMenu = () => setIsOpen(false);
+  const allLinks = [...primaryLinks, ...secondaryLinks];
 
   return (
     <>
-      <header className="relative z-50 w-full">
+      <header className={headerClassName}>
         <nav
           aria-label="Primary"
-          className="mx-auto flex w-full max-w-[1440px] items-center justify-between gap-5 px-5 py-6 md:flex-wrap md:justify-center md:px-[50px] md:py-[50px]"
+          className="mx-auto flex w-full max-w-[1440px] items-center gap-5 px-5 py-4 md:px-[50px] md:py-5"
+          onMouseLeave={() => setHovered(null)}
         >
-          <Link
-            href="/"
-            onClick={closeMenu}
-            className="flex shrink-0 items-center gap-2 font-display text-base font-bold uppercase leading-6 tracking-[-0.01em] text-brand-blue focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-calm-light"
-          >
-            <Atom size={24} strokeWidth={2} aria-hidden="true" />
-            ashleybradshaw
-          </Link>
+          <BrandMark className={logoClassName} onClick={closeMenu} />
 
-          <span aria-hidden="true" className="hidden h-6 w-[99px] shrink-0 bg-brand-blue lg:block" />
+          <div
+            aria-hidden="true"
+            className="hidden h-6 min-w-8 flex-1 bg-brand-blue xl:block"
+          />
 
-          <div className="flex items-center gap-5">
-            <ThemeToggle />
+          <LayoutGroup>
+            <div className="ml-auto hidden items-center gap-5 lg:flex xl:ml-0">
+              <NavCluster
+                items={primaryLinks}
+                hovered={hovered}
+                onHover={setHovered}
+                pillClassName={pillClassName}
+                linkClassName={linkClassName}
+              />
 
-            <ul className="hidden items-center gap-5 md:flex">
-              {navLinks.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className={linkClassName}>
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+              <div
+                aria-hidden="true"
+                className="hidden h-6 w-[72px] shrink-0 bg-brand-blue xl:block"
+              />
 
-            <span aria-hidden="true" className="hidden h-6 w-[72px] shrink-0 bg-brand-blue lg:block" />
-
-            <div className="hidden md:block">
-              <Button href="/availability">Check Availability</Button>
+              <NavCluster
+                items={secondaryLinks}
+                hovered={hovered}
+                onHover={setHovered}
+                pillClassName={pillClassName}
+                linkClassName={linkClassName}
+              />
             </div>
+          </LayoutGroup>
 
+          <div className="ml-auto lg:hidden">
             <button
               type="button"
-              className="inline-flex items-center justify-center text-brand-blue focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-calm-light md:hidden"
+              className={menuButtonClassName}
               aria-expanded={isOpen}
               aria-controls="mobile-navigation"
               aria-label={isOpen ? "Close menu" : "Open menu"}
@@ -146,7 +303,7 @@ export function Nav() {
             role="dialog"
             aria-modal="true"
             aria-label="Mobile navigation"
-            className="fixed inset-0 z-40 flex flex-col bg-calm-light text-dark md:hidden"
+            className={overlayClassName}
             variants={overlayVariants}
             initial="hidden"
             animate="visible"
@@ -159,20 +316,15 @@ export function Nav() {
               initial="hidden"
               animate="visible"
             >
-              {navLinks.map((item) => (
+              {allLinks.map((item) => (
                 <motion.li key={item.href} variants={itemVariants}>
-                  <Link
-                    href={item.href}
+                  <NavAnchor
+                    item={item}
                     onClick={closeMenu}
-                    className="font-display text-3xl font-bold uppercase tracking-[-0.02em] text-dark focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-calm-light"
-                  >
-                    {item.label}
-                  </Link>
+                    className={mobileLinkClassName}
+                  />
                 </motion.li>
               ))}
-              <motion.li className="mt-auto" variants={itemVariants} onClick={closeMenu}>
-                <Button href="/availability">Check Availability</Button>
-              </motion.li>
             </motion.ul>
           </motion.div>
         ) : null}

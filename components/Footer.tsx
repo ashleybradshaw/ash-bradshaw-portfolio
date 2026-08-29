@@ -1,45 +1,75 @@
+"use client";
+
 import Link from "next/link";
-import { Button } from "@/components/Button";
+import { usePathname } from "next/navigation";
 import { LiveClock } from "@/components/LiveClock";
 
 const socialLinks = [
-  { href: "https://www.linkedin.com/", label: "Linkedin" },
-  { href: "https://github.com/", label: "Github" },
-  { href: "https://x.com/", label: "X" },
+  {
+    href: "https://www.linkedin.com/in/ashleyjohnbradshaw/",
+    label: "Linkedin",
+  },
+  { href: "https://github.com/ashleybradshaw", label: "Github" },
+  { href: "https://x.com/ashjonbradshaw", label: "X" },
 ] as const;
 
-const footerTextClass =
-  "font-sans text-base font-bold uppercase leading-6 tracking-[-0.01em] text-calm-light";
+type FooterVariant = "red" | "blue";
 
-export function Footer() {
+type FooterProps = {
+  variant?: FooterVariant;
+};
+
+export function Footer({ variant }: FooterProps) {
+  const pathname = usePathname();
+  const resolvedVariant: FooterVariant =
+    variant ?? (pathname === "/" ? "red" : "blue");
+  const isRed = resolvedVariant === "red";
+
+  const textClass = isRed
+    ? "shrink-0 font-sans text-base font-bold uppercase leading-6 tracking-[-0.01em] text-brand-blue"
+    : "shrink-0 font-sans text-base font-bold uppercase leading-6 tracking-[-0.01em] text-cream-1";
+
+  const logoClass = isRed
+    ? "shrink-0 font-display text-base font-bold uppercase leading-6 tracking-[-0.01em] text-brand-blue"
+    : "shrink-0 font-display text-base font-bold uppercase leading-6 tracking-[-0.01em] text-cream-1";
+
+  const linkClass = isRed
+    ? `${textClass} transition-all hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-cream-1 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-red`
+    : `${textClass} transition-all hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[#FF0E00] focus-visible:ring-offset-2 focus-visible:ring-offset-[#13014C]`;
+
   return (
-    <footer className="w-full border-t-8 border-brand-red bg-brand-blue text-calm-light">
-      <div className="mx-auto flex w-full max-w-[1440px] flex-col items-start justify-between gap-8 px-5 py-10 sm:px-8 lg:flex-row lg:flex-wrap lg:items-center lg:gap-6 lg:px-[50px] lg:py-12">
-        <p className="font-display text-base font-bold uppercase leading-6 tracking-[-0.01em] text-calm-light">
-          ashleybradshaw.co.uk
-        </p>
+    <footer
+      className={
+        isRed
+          ? "relative -mt-px w-full bg-brand-red text-brand-blue shadow-[0_-4px_0_0_#FF0E00]"
+          : "w-full bg-brand-blue text-cream-1"
+      }
+    >
+      <div className="mx-auto flex w-full max-w-[1440px] flex-col items-start gap-6 px-5 py-10 sm:px-8 lg:flex-row lg:flex-nowrap lg:items-center lg:justify-between lg:gap-8 lg:px-[50px] lg:py-12">
+        <p className={logoClass}>ASHLEYBRADSHAW</p>
 
-        <p className={footerTextClass}>© 2026 AshleyBradshaw Limited</p>
+        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-8 lg:justify-center">
+          <p className={textClass}>© 2026 ASHLEYBRADSHAW LIMITED</p>
+          <p className={textClass}>
+            <LiveClock />
+          </p>
+        </div>
 
-        <p className={footerTextClass}>
-          <LiveClock />
-        </p>
-
-        <div className="flex flex-wrap items-center gap-5">
+        <div className="flex flex-wrap items-center gap-5 lg:shrink-0">
           {socialLinks.map((item) => (
-            <Link
+            <a
               key={item.label}
               href={item.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${footerTextClass} transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-brand-blue`}
+              className={linkClass}
             >
               {item.label}
-            </Link>
+            </a>
           ))}
-          <Button href="/availability" variant="accent">
+          <Link href="/#availability" className={linkClass}>
             Check Availability
-          </Button>
+          </Link>
         </div>
       </div>
     </footer>

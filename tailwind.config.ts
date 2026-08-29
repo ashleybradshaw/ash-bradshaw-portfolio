@@ -9,19 +9,33 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        "brand-red": "#FF0E00",
+        "brand-blue": "#13014C",
+        "cream-1": "#FFF9E6",
+        "cream-2": "#FFFFF0",
+        "cream-3": "#E1DBC8",
+        "text-dark": "#0A0127",
+        taupe: "#A59F8A",
+        "badge-current": "#78FC00",
+        "badge-current-ink": "#1B3500",
         brand: {
-          red: "var(--wild-bg)",
-          blue: "var(--wild-text)",
+          red: "#FF0E00",
+          blue: "#13014C",
+        },
+        cream: {
+          1: "#FFF9E6",
+          2: "#FFFFF0",
+          3: "#E1DBC8",
         },
         calm: {
-          light: "var(--calm-bg)",
-          gray: "#E8E6F0",
+          light: "#FFF9E6",
+          gray: "#E1DBC8",
         },
-        dark: "var(--calm-text)",
+        dark: "#0A0127",
+        "accent-cream": "#FFF9E6",
         "electric-red": "#D40B00",
         "deep-blue": "#20086B",
         light: "#FFFFFF",
-        "accent-cream": "#FFF9E6",
       },
       fontFamily: {
         display: ["var(--font-palanquin-dark)", "sans-serif"],

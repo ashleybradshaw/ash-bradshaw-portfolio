@@ -1,4 +1,10 @@
-export type ProjectSlug = "credability" | "repdaily" | "readygo";
+export type ProjectSlug =
+  | "credability"
+  | "repdaily"
+  | "readygo"
+  | "gamer-wager"
+  | "emma-finance"
+  | "reebok-zoku-runner";
 
 export type ProjectContent = {
   challenge: string;
@@ -17,8 +23,15 @@ export type Project = {
   hookSummary: string;
   headerSubtitle: string;
   content: ProjectContent;
+  heroImage: string;
+  objectPosition?: string;
   images: string[];
+  websiteUrl?: string;
 };
+
+function projectHeroImage(slug: ProjectSlug): string {
+  return `/projects/${slug}/hero-1.png`;
+}
 
 function projectImages(slug: ProjectSlug, count: number): string[] {
   return Array.from(
@@ -53,7 +66,9 @@ export const projects: Project[] = [
         "3–4x improvement in targeted application completion rates.",
       ],
     },
+    heroImage: projectHeroImage("credability"),
     images: projectImages("credability", 6),
+    websiteUrl: "https://credability.co.uk",
   },
   {
     slug: "repdaily",
@@ -79,6 +94,7 @@ export const projects: Project[] = [
         "V1 Architecture structured to scale seamlessly into V2 features (leaderboards and social challenges) without requiring a rebuild.",
       ],
     },
+    heroImage: projectHeroImage("repdaily"),
     images: projectImages("repdaily", 12),
   },
   {
@@ -89,7 +105,7 @@ export const projects: Project[] = [
     service: "App Design, AI Workflow Integration",
     title: "READYGO",
     hookSummary:
-      "Concept to Live Beta. A pre-activity planning app for runners and cyclists. Designed and shipped using a fully integrated AI workflow stack to bypass sequential handoffs.",
+      "A pre-activity planning app for runners and cyclists. Designed and shipped using a fully integrated AI workflow stack to bypass sequential handoffs.",
     headerSubtitle:
       "From a single friction insight to a live beta product. ReadyGo removes the gap between deciding to go out and actually going—built end-to-end using an advanced AI-assisted workflow.",
     content: {
@@ -105,7 +121,92 @@ export const projects: Project[] = [
         "Supported by a structured usability programme capturing contextual, in-app feedback from early users.",
       ],
     },
+    heroImage: projectHeroImage("readygo"),
     images: projectImages("readygo", 6),
+  },
+  {
+    slug: "gamer-wager",
+    client: "Confidential",
+    year: "Concept",
+    role: "Product Design",
+    service: "Ecosystem Design, App & Web",
+    title: "GAMER WAGER",
+    hookSummary:
+      "100+ Screen Ecosystem. A peer-to-peer esports wagering platform. Bridging authentic competitive gaming culture with the strict compliance of a real-money fintech product.",
+    headerSubtitle:
+      "A peer-to-peer esports wagering platform. Bridging authentic competitive gaming culture with the strict compliance of a real-money fintech product.",
+    content: {
+      challenge:
+        "Real-money wagering on competitive games sits at the intersection of fandom and regulation. The product had to feel native to esports culture without ever looking like a loophole around financial controls.",
+      uxThinking:
+        "The ecosystem was mapped as a 100+ screen system: onboarding, wallet, match selection, live states, dispute, and compliance. Each flow was designed so authenticity never outran KYC, responsible gambling, or payout clarity.",
+      execution:
+        "Interface language stayed closer to competitive tooling than casino chrome. Shared components kept high-stakes states consistent across player, opponent, and admin surfaces.",
+      impact: [
+        "100+ screen ecosystem designed as a single, coherent product.",
+        "Compliance requirements carried through every wagering state.",
+        "Culture-first UI that still reads as a regulated fintech product.",
+      ],
+    },
+    heroImage: projectHeroImage("gamer-wager"),
+    objectPosition: "65% 50%",
+    images: [projectHeroImage("gamer-wager")],
+  },
+  {
+    slug: "emma-finance",
+    client: "EMMA Finance",
+    year: "Concept",
+    role: "Product Design",
+    service: "Feature Concept, App Design",
+    title: "EMMA FINANCE",
+    hookSummary:
+      "A speculative feature concept exploring how a major money management app could integrate savings tools without increasing cognitive load.",
+    headerSubtitle:
+      "A speculative feature concept exploring how a major money management app could integrate savings tools without increasing cognitive load.",
+    content: {
+      challenge:
+        "Savings tools often arrive as extra screens, extra choices, and extra guilt. The brief was to add capability without adding cognitive load to an already dense money-management surface.",
+      uxThinking:
+        "The concept treated savings as a quiet layer on existing behaviours rather than a new destination. Prompts, language, and visual hierarchy were designed to stay secondary to the user's primary money job.",
+      execution:
+        "A character-led visual system and restrained feature set kept the idea memorable without turning the product into a game. Interaction density stayed low so the existing app still felt like the source of truth.",
+      impact: [
+        "Savings introduced as a low-load overlay, not a parallel product.",
+        "Speculative concept used to pressure-test hierarchy and language.",
+        "Visual system designed to sit inside an existing money-management brand.",
+      ],
+    },
+    heroImage: projectHeroImage("emma-finance"),
+    objectPosition: "center center",
+    images: [projectHeroImage("emma-finance")],
+  },
+  {
+    slug: "reebok-zoku-runner",
+    client: "Reebok",
+    year: "Campaign",
+    role: "Digital Design",
+    service: "Microsites, Digital Lookbooks",
+    title: "REEBOK ZOKU RUNNER",
+    hookSummary:
+      "Three regional microsites and two digital lookbooks delivered across the UK, USA, and Australia under an intense six-week deadline.",
+    headerSubtitle:
+      "Three regional microsites and two digital lookbooks delivered across the UK, USA, and Australia under an intense six-week deadline.",
+    content: {
+      challenge:
+        "A six-week window to ship three regional microsites and two lookbooks, each needing to feel local without fracturing the campaign system.",
+      uxThinking:
+        "A shared grid, type, and motion language carried the ZOKU story, with regional swaps isolated to content, imagery, and localisation rather than structure.",
+      execution:
+        "Lookbooks and microsites were produced as one kit. Tight art direction and a repeatable page system made the UK, USA, and Australia variants ship as siblings instead of three separate rebuilds.",
+      impact: [
+        "Three regional microsites delivered inside six weeks.",
+        "Two digital lookbooks produced from the same system.",
+        "Campaign language held together across UK, USA, and Australia.",
+      ],
+    },
+    heroImage: projectHeroImage("reebok-zoku-runner"),
+    objectPosition: "center center",
+    images: [projectHeroImage("reebok-zoku-runner")],
   },
 ];
 

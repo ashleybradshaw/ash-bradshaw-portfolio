@@ -28,10 +28,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       className={`${palanquinDark.variable} ${plusJakartaSans.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
     >
-      <body className="flex min-h-full flex-col bg-calm-light font-sans text-dark">
+      <body className="flex min-h-full flex-col bg-cream-1 font-sans text-text-dark">
         <Nav />
-        <main className="flex flex-1 flex-col">{children}</main>
+        <main className="flex flex-1 flex-col bg-inherit">{children}</main>
         <Footer />
       </body>
     </html>

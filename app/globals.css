@@ -1,21 +1,21 @@
 @import "tailwindcss";
 @config "../tailwind.config.ts";
 
-:root {
-  --wild-bg: #ff0e00;
-  --wild-text: #13014c;
-  --calm-bg: #f7f6f9;
-  --calm-text: #0a0127;
-}
-
 @theme inline {
-  --color-brand-red: var(--wild-bg);
-  --color-brand-blue: var(--wild-text);
+  --color-brand-red: #ff0e00;
+  --color-brand-blue: #13014c;
+  --color-cream-1: #fff9e6;
+  --color-cream-2: #fffff0;
+  --color-cream-3: #e1dbc8;
+  --color-text-dark: #0a0127;
+  --color-taupe: #a59f8a;
+  --color-badge-current: #78fc00;
+  --color-badge-current-ink: #1b3500;
   --color-electric-red: #d40b00;
   --color-deep-blue: #20086b;
-  --color-calm-light: var(--calm-bg);
-  --color-calm-gray: #e8e6f0;
-  --color-dark: var(--calm-text);
+  --color-calm-light: #fff9e6;
+  --color-calm-gray: #e1dbc8;
+  --color-dark: #0a0127;
   --color-light: #ffffff;
   --color-accent-cream: #fff9e6;
   --font-display: var(--font-palanquin-dark);
@@ -23,19 +23,17 @@
   --font-sans: var(--font-plus-jakarta);
 }
 
-* {
-  transition:
-    background-color 400ms cubic-bezier(0.16, 1, 0.3, 1),
-    color 400ms ease;
-}
-
 html {
-  background-color: var(--calm-bg);
-  color: var(--calm-text);
+  background-color: #fff9e6;
+  color: #0a0127;
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+  overflow-x: hidden;
 }
 
 body {
-  background-color: var(--calm-bg);
-  color: var(--calm-text);
+  background-color: #fff9e6;
+  color: #0a0127;
   font-family: var(--font-plus-jakarta), sans-serif;
+  overflow-x: hidden;
 }

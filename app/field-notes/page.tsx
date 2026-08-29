@@ -16,7 +16,7 @@ export default function FieldNotesPage() {
         </p>
         <Link
           href="/#works"
-          className="mt-10 inline-flex font-sans text-base font-bold uppercase tracking-[-0.01em] text-brand-red underline decoration-wavy underline-offset-4 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red"
+          className="mt-10 inline-flex font-sans text-base font-bold uppercase tracking-[-0.01em] text-brand-red underline decoration-wavy underline-offset-4 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-cream-1"
         >
           Back to works
         </Link>

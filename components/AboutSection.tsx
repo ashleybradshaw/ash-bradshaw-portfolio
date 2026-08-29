@@ -1,6 +1,7 @@
 import { CheckAvailabilityButton } from "@/components/Buttons";
 import { MotionSection } from "@/components/MotionSection";
 import { RoleBreakdown } from "@/components/RoleBreakdown";
+import { SectionHeader } from "@/components/SectionHeader";
 
 export function AboutSection() {
   return (
@@ -10,24 +11,7 @@ export function AboutSection() {
       className="relative z-0 bg-cream-1 text-text-dark"
     >
       <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-[50px]">
-        <div
-          aria-hidden="true"
-          className="flex items-center justify-center py-[75px]"
-        >
-          <span className="h-px w-full border-t-2 border-dashed border-cream-3" />
-        </div>
-
-        <header className="flex flex-col items-center py-[50px] text-center">
-          <p className="w-full font-sans text-[28px] font-bold uppercase leading-9 tracking-[-0.01em]">
-            About
-          </p>
-          <h2
-            id="about-title"
-            className="w-full font-display text-[clamp(2.75rem,7vw,4.25rem)] font-bold uppercase leading-[1.2] tracking-[-0.04em]"
-          >
-            Walking the line
-          </h2>
-        </header>
+        <SectionHeader titleId="about-title" subtitle="About" title="Walking the line" />
 
         <div className="flex flex-col items-start gap-12 pb-16 lg:flex-row lg:justify-between lg:gap-10 lg:pb-24">
           <div className="flex max-w-[660px] flex-col items-start gap-[30px] p-5">
@@ -56,6 +40,29 @@ export function AboutSection() {
             <div id="availability">
               <CheckAvailabilityButton href="#availability" />
             </div>
+            <h3 className="font-display text-base font-bold uppercase leading-6 tracking-[-0.01em] text-text-dark">
+              Foundations &amp; Origins
+            </h3>
+            <p className="font-sans text-[28px] font-bold leading-9 tracking-[-0.01em] text-text-dark">
+              The Curious Catalyst
+            </p>
+            <p className="font-sans text-base font-bold leading-6 tracking-[-0.01em] text-text-dark">
+              It started by taking hardware apart and never quite getting it
+              back together—a fixation on mechanisms that quickly turned into
+              asking uncomfortable questions until the underlying logic
+              revealed itself. Hands-on production across radio, TV, web, and
+              animation gave that curiosity real tools, while a First-Class
+              degree in Marketing &amp; Brand Management at Leeds anchored it
+              in human behavior.
+            </p>
+            <p className="font-sans text-base font-bold leading-6 tracking-[-0.01em] text-text-dark">
+              From early creative direction for global brands to running
+              multidisciplinary product studios, design was never just visual
+              presentation—it was full-stack problem solving and system
+              architecture. Every build I ship today is governed by four core
+              operational pillars: empathy, accessibility, value exchange, and
+              long-term aftercare.
+            </p>
           </div>
 
           <div className="w-full max-w-[620px] shrink-0 lg:pt-5">

@@ -62,6 +62,7 @@ export function Footer({ variant }: FooterProps) {
               href={item.href}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={`${item.label} (opens in a new tab)`}
               className={linkClass}
             >
               {item.label}

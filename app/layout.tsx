@@ -6,14 +6,14 @@ import "./globals.css";
 
 const palanquinDark = Palanquin_Dark({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["700"],
   variable: "--font-palanquin-dark",
   display: "swap",
 });
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600", "700"],
   variable: "--font-plus-jakarta",
   display: "swap",
 });

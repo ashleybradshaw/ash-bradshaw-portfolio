@@ -4,9 +4,9 @@ import { OpenProjectLink } from "@/components/Buttons";
 import { MotionSection } from "@/components/MotionSection";
 import { PixelDivider } from "@/components/PixelDivider";
 import { ReferralsSection } from "@/components/ReferralsSection";
+import { DottedRule, SectionHeader } from "@/components/SectionHeader";
 import { SelectedWorksGrid } from "@/components/SelectedWorksGrid";
 import { ServicesSection } from "@/components/ServicesSection";
-import { StoryGrid } from "@/components/StoryGrid";
 import { projects } from "@/lib/projects";
 
 const heroCardBase =
@@ -29,22 +29,15 @@ export default function Home() {
         aria-labelledby="hero-title"
         className="w-full bg-brand-red pt-[72px] text-brand-blue md:pt-[88px]"
       >
-        <div className="mx-auto w-full max-w-[1440px] px-5 pb-16 pt-8 sm:px-8 lg:px-[50px] lg:pb-20">
-          <header className="flex flex-col items-center text-center">
-            <p className="w-full font-sans text-[clamp(1.125rem,2.2vw,1.75rem)] font-bold uppercase leading-9 tracking-[-0.01em] text-brand-blue">
-              Product Lead & Design Engineer
-            </p>
-            <h1
-              id="hero-title"
-              className="w-full font-display text-[clamp(4rem,11vw,10rem)] font-bold uppercase leading-[0.9] tracking-[-0.04em] text-brand-blue"
-            >
-              ASH BRADSHAW
-            </h1>
-          </header>
-
-          <div
-            aria-hidden="true"
-            className="my-10 h-px w-full border-t-2 border-dashed border-brand-blue lg:my-12"
+        <div className="mx-auto w-full max-w-[1440px] px-5 pt-8 sm:px-8 lg:px-[50px]">
+          <SectionHeader
+            as="h1"
+            size="hero"
+            tone="red"
+            rule="after"
+            titleId="hero-title"
+            subtitle="Product Lead & Design Engineer"
+            title="ASH BRADSHAW"
           />
 
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
@@ -96,20 +89,13 @@ export default function Home() {
               </OpenProjectLink>
             </article>
           </div>
+
+          <DottedRule tone="red" />
         </div>
       </MotionSection>
 
       <MotionSection
         id="story"
-        aria-label="The narrative"
-        className="relative z-0 m-0 bg-brand-red text-brand-blue"
-      >
-        <div className="mx-auto w-full max-w-[1440px] px-5 pb-16 sm:px-8 lg:px-[50px]">
-          <StoryGrid />
-        </div>
-      </MotionSection>
-
-      <MotionSection
         aria-labelledby="career-arc-title"
         className="m-0 w-full bg-brand-red text-brand-blue"
       >
@@ -164,17 +150,11 @@ export default function Home() {
         className="m-0 w-full bg-cream-1 text-text-dark"
       >
         <div className="mx-auto w-full max-w-[1440px] px-5 pb-16 sm:px-8 lg:px-[50px] lg:pb-24">
-          <header className="flex flex-col items-center py-[50px] text-center">
-            <p className="w-full font-sans text-[28px] font-bold uppercase leading-9 tracking-[-0.01em]">
-              Selected Works
-            </p>
-            <h2
-              id="selected-works-title"
-              className="w-full font-display text-[clamp(2.75rem,7vw,4.25rem)] font-bold uppercase leading-[1.2] tracking-[-0.04em]"
-            >
-              proof & Pudding.
-            </h2>
-          </header>
+          <SectionHeader
+            titleId="selected-works-title"
+            subtitle="Selected Works"
+            title="proof & Pudding."
+          />
 
           <SelectedWorksGrid projects={projects} />
         </div>

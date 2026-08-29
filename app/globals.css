@@ -11,15 +11,8 @@
   --color-taupe: #a59f8a;
   --color-badge-current: #78fc00;
   --color-badge-current-ink: #1b3500;
-  --color-electric-red: #d40b00;
-  --color-deep-blue: #20086b;
   --color-calm-light: #fff9e6;
-  --color-calm-gray: #e1dbc8;
-  --color-dark: #0a0127;
-  --color-light: #ffffff;
-  --color-accent-cream: #fff9e6;
   --font-display: var(--font-palanquin-dark);
-  --font-body: var(--font-plus-jakarta);
   --font-sans: var(--font-plus-jakarta);
 }
 

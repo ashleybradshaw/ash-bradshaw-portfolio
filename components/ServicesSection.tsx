@@ -1,7 +1,17 @@
 import Image from "next/image";
 import { CrosshairRail } from "@/components/CrosshairRail";
+import { SectionHeader } from "@/components/SectionHeader";
 
-const capabilities = [
+type Capability = {
+  number: string;
+  title: string;
+  subtitle: string;
+  body: string;
+  image: string;
+  imageAlt: string;
+};
+
+const capabilities: readonly Capability[] = [
   {
     number: "1.",
     title: "End-to-End Production",
@@ -34,7 +44,7 @@ const capabilities = [
     image: "/services/growth-scale.png",
     imageAlt: "Growth and scale product flow map",
   },
-] as const;
+];
 
 export function ServicesSection() {
   return (
@@ -44,17 +54,11 @@ export function ServicesSection() {
       className="m-0 bg-cream-1 text-text-dark"
     >
       <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-[50px]">
-        <header className="flex flex-col items-center pb-[50px] pt-[100px] text-center">
-          <p className="w-full font-sans text-[28px] font-bold uppercase leading-9 tracking-[-0.01em]">
-            Core Capabilities
-          </p>
-          <h2
-            id="capabilities-title"
-            className="w-full font-display text-[clamp(2.75rem,7vw,4.25rem)] font-bold uppercase leading-[1.2] tracking-[-0.04em]"
-          >
-            End-to-end
-          </h2>
-        </header>
+        <SectionHeader
+          titleId="capabilities-title"
+          subtitle="Core Capabilities"
+          title="End-to-end"
+        />
 
         {capabilities.map((item) => (
           <div key={item.number}>

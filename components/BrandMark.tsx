@@ -5,13 +5,12 @@ import { motion, useReducedMotion } from "framer-motion";
 
 const MARK = "ASHLEYBRADSHAW";
 
-export function BrandMark({
-  className,
-  onClick,
-}: {
+type BrandMarkProps = {
   className: string;
   onClick?: () => void;
-}) {
+};
+
+export function BrandMark({ className, onClick }: BrandMarkProps) {
   const prefersReducedMotion = useReducedMotion();
   const letters = MARK.split("");
 

@@ -125,7 +125,7 @@ export function MorphSlider({ images, title }: MorphSliderProps) {
               <ArrowLeft size={24} strokeWidth={2} aria-hidden="true" />
             </button>
 
-            <div className="flex items-center gap-2.5" aria-label="Gallery pages">
+            <div className="flex items-center gap-2.5" role="group" aria-label="Gallery pages">
               {Array.from({ length: pageCount }, (_, index) => {
                 const isActive = index === currentPage;
 

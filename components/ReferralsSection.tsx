@@ -1,8 +1,16 @@
 import Image from "next/image";
 import { CrosshairRail } from "@/components/CrosshairRail";
 import { MotionSection } from "@/components/MotionSection";
+import { SectionHeader } from "@/components/SectionHeader";
 
-const referrals = [
+type Referral = {
+  quote: string;
+  name: string;
+  role: string;
+  avatar: string;
+};
+
+const referrals: readonly Referral[] = [
   {
     quote:
       "Ashley was key to CredAbility’s growth, expertly turning complex data and research into intuitive designs.",
@@ -24,7 +32,7 @@ const referrals = [
     role: "Latus Group CEO",
     avatar: "/referrals/jack-latues.png",
   },
-] as const;
+];
 
 function QuoteMark() {
   return (
@@ -70,17 +78,11 @@ export function ReferralsSection() {
       className="m-0 w-full bg-cream-1 text-text-dark"
     >
       <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-[50px]">
-        <header className="flex flex-col items-center pb-[50px] pt-[100px] text-center">
-          <p className="w-full font-sans text-[28px] font-bold uppercase leading-9 tracking-[-0.01em]">
-            A few words from people I&apos;ve worked with.
-          </p>
-          <h2
-            id="referrals-title"
-            className="w-full font-display text-[clamp(2.75rem,7vw,4.25rem)] font-bold uppercase leading-[1.2] tracking-[-0.04em]"
-          >
-            What they say
-          </h2>
-        </header>
+        <SectionHeader
+          titleId="referrals-title"
+          subtitle="A few words from people I've worked with."
+          title="What they say"
+        />
 
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-3 lg:gap-5">
           {referrals.map((item) => (
@@ -98,7 +100,7 @@ export function ReferralsSection() {
                 <span className="relative size-12 shrink-0 overflow-hidden rounded-full">
                   <Image
                     src={item.avatar}
-                    alt=""
+                    alt={`${item.name} portrait`}
                     fill
                     sizes="48px"
                     className="object-cover object-center"

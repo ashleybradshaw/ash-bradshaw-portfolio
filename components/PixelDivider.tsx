@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef } from "react";
+import { useHeroTokens } from "@/components/HeroTokensProvider";
 
 const PALETTES = {
   "red-to-cream": { from: "#FF0E00", to: "#FFF9E6" },
@@ -119,7 +120,10 @@ export function PixelDivider({
 }: {
   direction?: PixelDividerDirection;
 }) {
-  const { from, to } = PALETTES[direction];
+  const { tokens } = useHeroTokens();
+  const cream = PALETTES["red-to-cream"].to;
+  const from = direction === "red-to-cream" ? tokens.bg : cream;
+  const to = direction === "red-to-cream" ? cream : tokens.bg;
   const invert = direction === "cream-to-red";
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -212,11 +216,12 @@ export function PixelDivider({
     <div
       ref={containerRef}
       aria-hidden="true"
-      className={`relative m-0 w-full overflow-hidden p-0 aspect-[48/14] lg:aspect-[48/8] ${
-        direction === "cream-to-red" ? "-mb-0.5" : ""
+      className={`relative m-0 w-full overflow-hidden p-0 aspect-[48/14] transition-[background-color] duration-[400ms] ease-in-out lg:aspect-[48/8] ${
+        direction === "cream-to-red" ? "-mb-px" : ""
       }`}
       style={{
-        backgroundColor: direction === "cream-to-red" ? to : from,
+        backgroundColor:
+          direction === "cream-to-red" ? "var(--hero-bg)" : from,
       }}
     >
       <canvas ref={canvasRef} className="block h-full w-full align-top" />

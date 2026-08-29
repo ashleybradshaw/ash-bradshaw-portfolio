@@ -10,10 +10,6 @@ type SectionHeaderProps = {
   rule?: "before" | "after" | "none";
 };
 
-function ruleStroke(tone: HeaderTone) {
-  return tone === "red" ? "#13014C" : "#E1DBC8";
-}
-
 export function DottedRule({
   tone = "cream",
 }: {
@@ -32,7 +28,7 @@ export function DottedRule({
         <path
           d="M0 1H1340"
           fill="none"
-          stroke={ruleStroke(tone)}
+          stroke={tone === "red" ? "var(--hero-accent)" : "#E1DBC8"}
           strokeWidth="2"
           strokeLinecap="round"
           strokeDasharray="6 3"
@@ -53,7 +49,7 @@ export function SectionHeader({
   rule = "before",
 }: SectionHeaderProps) {
   const Heading = as;
-  const inkClass = tone === "red" ? "text-brand-blue" : "text-text-dark";
+  const inkClass = tone === "red" ? "text-[var(--hero-text)]" : "text-text-dark";
   const titleClass =
     size === "hero"
       ? "w-full font-display text-[clamp(4rem,11vw,10rem)] font-bold uppercase leading-[0.9] tracking-[-0.04em]"

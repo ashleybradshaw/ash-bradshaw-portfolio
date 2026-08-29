@@ -12,9 +12,9 @@ import { projects } from "@/lib/projects";
 const heroCardBase =
   "flex min-h-[320px] w-full flex-col items-start gap-2.5 p-5";
 
-const heroCardNavy = `${heroCardBase} bg-brand-blue`;
+const heroCardNavy = `${heroCardBase} bg-[var(--hero-accent)] text-[var(--hero-bg)] transition-[background-color,color] duration-[400ms] ease-in-out`;
 
-const heroCardOutline = `${heroCardBase} border border-solid border-brand-blue bg-brand-red`;
+const heroCardOutline = `${heroCardBase} border border-solid border-[var(--hero-accent)] bg-transparent text-[var(--hero-text)] transition-[border-color,color] duration-[400ms] ease-in-out`;
 
 const cardTitleClass =
   "font-display text-[28px] font-bold uppercase leading-9 tracking-[-0.01em]";
@@ -27,7 +27,7 @@ export default function Home() {
     <>
       <MotionSection
         aria-labelledby="hero-title"
-        className="w-full bg-brand-red pt-[72px] text-brand-blue md:pt-[88px]"
+        className="hero-canvas w-full pt-[72px] md:pt-[88px]"
       >
         <div className="mx-auto w-full max-w-[1440px] px-5 pt-8 sm:px-8 lg:px-[50px]">
           <SectionHeader
@@ -42,8 +42,8 @@ export default function Home() {
 
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
             <article className={heroCardNavy}>
-              <h2 className={`${cardTitleClass} text-brand-red`}>Who I Am</h2>
-              <p className={`${cardBodyClass} text-brand-red`}>
+              <h2 className={`${cardTitleClass} text-[var(--hero-bg)]`}>Who I Am</h2>
+              <p className={`${cardBodyClass} text-[var(--hero-bg)]`}>
                 Product Lead with 11+ years shipping complex digital platforms
                 across fintech, health tech, and enterprise SaaS. Expert in
                 taking zero-to-one strategy from discovery to production code.
@@ -51,21 +51,21 @@ export default function Home() {
             </article>
 
             <article className={heroCardOutline}>
-              <h2 className={`${cardTitleClass} text-brand-blue`}>Where I Am</h2>
-              <p className={`${cardBodyClass} text-brand-blue`}>
+              <h2 className={`${cardTitleClass} text-[var(--hero-text)]`}>Where I Am</h2>
+              <p className={`${cardBodyClass} text-[var(--hero-text)]`}>
                 Product Design at Lloyd’s Banking Group, architecting the next
                 generation of wealth management platforms.
               </p>
             </article>
 
             <article className={heroCardNavy}>
-              <h2 className={`${cardTitleClass} text-brand-red`}>
+              <h2 className={`${cardTitleClass} text-[var(--hero-bg)]`}>
                 Core Philosophy
               </h2>
-              <p className="font-sans text-[28px] font-bold leading-9 tracking-[-0.01em] text-brand-red">
+              <p className="font-sans text-[28px] font-bold leading-9 tracking-[-0.01em] text-[var(--hero-bg)]">
                 Design to code.
               </p>
-              <p className={`${cardBodyClass} text-brand-red`}>
+              <p className={`${cardBodyClass} text-[var(--hero-bg)]`}>
                 Designing in the space between product and user. I bypass
                 traditional wireframe overhead, translating green-lit designs
                 straight into code and PRDs.
@@ -73,17 +73,17 @@ export default function Home() {
             </article>
 
             <article className={heroCardNavy}>
-              <h2 className={`${cardTitleClass} text-brand-red`}>Case Study</h2>
-              <p className="font-sans text-[28px] font-bold leading-9 tracking-[-0.01em] text-brand-red">
+              <h2 className={`${cardTitleClass} text-[var(--hero-bg)]`}>Case Study</h2>
+              <p className="font-sans text-[28px] font-bold leading-9 tracking-[-0.01em] text-[var(--hero-bg)]">
                 0 to 2.5 Million
               </p>
-              <p className={`${cardBodyClass} text-brand-red`}>
+              <p className={`${cardBodyClass} text-[var(--hero-bg)]`}>
                 Founding product designer for CredAbility. Designed the full
                 ecosystem, brand, and service strategy.
               </p>
               <OpenProjectLink
                 href="/works/credability"
-                className="mt-auto text-cream-1 underline decoration-cream-1 decoration-wavy underline-offset-4 hover:text-cream-1"
+                className="mt-auto text-[var(--hero-bg)] underline decoration-[var(--hero-bg)] decoration-wavy underline-offset-4 hover:opacity-80"
               >
                 Quick Read
               </OpenProjectLink>
@@ -97,10 +97,10 @@ export default function Home() {
       <MotionSection
         id="story"
         aria-labelledby="career-arc-title"
-        className="m-0 w-full bg-brand-red text-brand-blue"
+        className="hero-canvas m-0 w-full"
       >
         <div className="mx-auto w-full max-w-[1440px] px-5 pb-0 sm:px-8 lg:px-[50px]">
-          <div className="relative min-h-[609px] overflow-hidden rounded-sm bg-brand-blue shadow-[0_4px_60px_20px_rgb(0_0_85/0.2)]">
+          <div className="relative min-h-[609px] overflow-hidden rounded-sm bg-[var(--hero-accent)] shadow-[0_4px_60px_20px_rgb(0_0_85/0.2)] transition-colors duration-[400ms] ease-in-out">
             <Image
               src="/ashley-portrait.png"
               alt="Ashley Bradshaw"
@@ -111,24 +111,24 @@ export default function Home() {
             />
             <div
               aria-hidden="true"
-              className="absolute inset-0 bg-[linear-gradient(24deg,#13014C_30.5%,transparent_69.5%)] mix-blend-multiply"
+              className="absolute inset-0 bg-[linear-gradient(24deg,var(--hero-accent)_30.5%,transparent_69.5%)] mix-blend-multiply"
             />
             <div className="relative z-10 flex min-h-[609px] flex-col justify-end gap-5 px-8 pb-[50px] pt-8 lg:max-w-[660px] lg:px-10">
               <header className="flex flex-col">
-                <p className="font-sans text-[28px] font-bold uppercase leading-9 tracking-[-0.01em] text-brand-red">
+                <p className="font-sans text-[28px] font-bold uppercase leading-9 tracking-[-0.01em] text-[var(--hero-bg)]">
                   Career Arc
                 </p>
                 <h2
                   id="career-arc-title"
-                  className="font-display text-[clamp(2.75rem,6vw,4.25rem)] font-bold uppercase leading-[0.95] tracking-[-0.04em] text-brand-red"
+                  className="font-display text-[clamp(2.75rem,6vw,4.25rem)] font-bold uppercase leading-[0.95] tracking-[-0.04em] text-[var(--hero-bg)]"
                 >
                   SCALING THE STACK
                 </h2>
               </header>
-              <h3 className={`${cardTitleClass} text-brand-red`}>
+              <h3 className={`${cardTitleClass} text-[var(--hero-bg)]`}>
                 Enterprise & AI Integration
               </h3>
-              <p className={`${cardBodyClass} text-brand-red`}>
+              <p className={`${cardBodyClass} text-[var(--hero-bg)]`}>
                 Today, I build for enterprise scale. By integrating advanced
                 LLM and agentic workflows (Cursor, Claude, Perplexity), I
                 collapse the discovery-to-code pipeline - delivering complete

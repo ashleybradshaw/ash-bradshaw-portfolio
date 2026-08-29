@@ -26,22 +26,22 @@ export function Footer({ variant }: FooterProps) {
   const isRed = resolvedVariant === "red";
 
   const textClass = isRed
-    ? "shrink-0 font-sans text-base font-bold uppercase leading-6 tracking-[-0.01em] text-brand-blue"
+    ? "shrink-0 font-sans text-base font-bold uppercase leading-6 tracking-[-0.01em] text-[var(--hero-text)] transition-[color] duration-[400ms] ease-in-out"
     : "shrink-0 font-sans text-base font-bold uppercase leading-6 tracking-[-0.01em] text-cream-1";
 
   const logoClass = isRed
-    ? "shrink-0 font-display text-base font-bold uppercase leading-6 tracking-[-0.01em] text-brand-blue"
+    ? "shrink-0 font-display text-base font-bold uppercase leading-6 tracking-[-0.01em] text-[var(--hero-text)] transition-[color] duration-[400ms] ease-in-out"
     : "shrink-0 font-display text-base font-bold uppercase leading-6 tracking-[-0.01em] text-cream-1";
 
   const linkClass = isRed
-    ? `${textClass} transition-all hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-cream-1 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-red`
+    ? `${textClass} hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--hero-text)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-bg)]`
     : `${textClass} transition-all hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[#FF0E00] focus-visible:ring-offset-2 focus-visible:ring-offset-[#13014C]`;
 
   return (
     <footer
       className={
         isRed
-          ? "relative -mt-px w-full bg-brand-red text-brand-blue shadow-[0_-4px_0_0_#FF0E00]"
+          ? "hero-canvas relative -mt-px w-full shadow-[0_-1px_0_0_var(--hero-bg)]"
           : "w-full bg-brand-blue text-cream-1"
       }
     >

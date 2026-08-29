@@ -17,11 +17,20 @@
 }
 
 html {
+  --hero-bg: #ff0e00;
+  --hero-text: #13014c;
+  --hero-accent: #13014c;
   background-color: #fff9e6;
   color: #0a0127;
   scroll-behavior: smooth;
   scroll-padding-top: 88px;
   overflow-x: hidden;
+}
+
+.hero-canvas {
+  background-color: var(--hero-bg);
+  color: var(--hero-text);
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 body {

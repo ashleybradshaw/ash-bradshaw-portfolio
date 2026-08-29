@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 
 export const outlinedControlClass =
-  "inline-flex w-fit items-center justify-center gap-2 rounded-[4px] border border-current px-3 py-1.5 font-sans text-[12px] font-bold uppercase leading-4 tracking-[-0.01em] transition-[opacity,color,border-color,background-color] duration-[400ms] ease-in-out hover:opacity-80 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-current";
+  "inline-flex w-fit items-center justify-center gap-2 rounded-[4px] border border-current px-3 py-1.5 font-sans text-xs font-bold uppercase leading-4 tracking-wider transition-colors duration-[400ms] ease-in-out hover:opacity-80 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-current";
 
 type CheckAvailabilityButtonProps = {
   href?: string;
@@ -23,6 +23,49 @@ export function CheckAvailabilityButton({
     >
       Check Availability
     </a>
+  );
+}
+
+type OutlinedCtaProps = {
+  href: string;
+  children: ReactNode;
+  className?: string;
+  external?: boolean;
+};
+
+export function OutlinedCta({
+  href,
+  children,
+  className = "",
+  external = false,
+}: OutlinedCtaProps) {
+  const classNameFull = `${outlinedControlClass} ${className}`;
+
+  if (external) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={classNameFull}
+      >
+        {children}
+      </a>
+    );
+  }
+
+  if (href.startsWith("#")) {
+    return (
+      <a href={href} className={classNameFull}>
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={href} className={classNameFull}>
+      {children}
+    </Link>
   );
 }
 

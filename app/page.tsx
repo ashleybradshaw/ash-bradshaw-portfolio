@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { AboutSection } from "@/components/AboutSection";
-import { OpenProjectLink } from "@/components/Buttons";
+import { OutlinedCta } from "@/components/Buttons";
+import { Iridescence } from "@/components/Iridescence";
 import { MotionSection } from "@/components/MotionSection";
 import { PixelDivider } from "@/components/PixelDivider";
 import { ReferralsSection } from "@/components/ReferralsSection";
@@ -10,7 +11,7 @@ import { ServicesSection } from "@/components/ServicesSection";
 import { projects } from "@/lib/projects";
 
 const heroCardBase =
-  "flex min-h-[320px] w-full flex-col items-start gap-2.5 p-5";
+  "flex h-full min-h-[280px] w-full flex-col items-start gap-2.5 p-5";
 
 const heroCardNavy = `${heroCardBase} bg-[var(--hero-accent)] text-[var(--hero-bg)] transition-[background-color,color] duration-[400ms] ease-in-out`;
 
@@ -41,50 +42,63 @@ export default function Home() {
             title="ASH BRADSHAW"
           />
 
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-2 xl:grid-cols-4">
             <article className={heroCardNavy}>
-              <h2 className={`${cardTitleClass} text-[var(--hero-bg)]`}>Who I Am</h2>
-              <p className={`${cardBodyClass} text-[var(--hero-bg)]`}>
-                Product Lead with 11+ years shipping complex digital platforms
-                across fintech, health tech, and enterprise SaaS. Expert in
-                taking zero-to-one strategy from discovery to production code.
+              <h2 className={cardTitleClass}>Who I Am</h2>
+              <p className={cardBodyClass}>
+                Product Lead &amp; Design Engineer with 11+ years shipping
+                enterprise SaaS, fintech, and health tech from zero-to-one
+                strategy down to production code.
               </p>
+              <OutlinedCta href="#about" className="mt-auto">
+                About
+              </OutlinedCta>
             </article>
 
             <article className={heroCardOutline}>
-              <h2 className={`${cardTitleClass} text-[var(--hero-text)]`}>Where I Am</h2>
-              <p className={`${cardBodyClass} text-[var(--hero-text)]`}>
-                Product Design at Lloyd’s Banking Group, architecting the next
-                generation of wealth management platforms.
+              <h2 className={cardTitleClass}>Where I Am</h2>
+              <p className={cardBodyClass}>
+                Architecting next-generation wealth management platforms at
+                Lloyds Banking Group, bridging complex service design with
+                scalable digital product ecosystems.
               </p>
+              <OutlinedCta
+                href="https://www.linkedin.com/in/ashleyjohnbradshaw/"
+                external
+                className="mt-auto"
+              >
+                Linkedin
+              </OutlinedCta>
+            </article>
+
+            <article className="relative flex h-full min-h-[280px] w-full flex-col overflow-hidden bg-[var(--hero-accent)] text-[var(--hero-bg)] transition-[background-color,color] duration-[400ms] ease-in-out">
+              <Iridescence className="pointer-events-none absolute inset-0 z-0 opacity-80" />
+              <div className="relative z-10 flex h-full min-h-[280px] flex-col items-start gap-2.5 p-5">
+                <h2 className={cardTitleClass}>Core Philosophy</h2>
+                <p className={cardBodyClass}>
+                  Bypassing wireframe overhead by translating green-lit product
+                  designs directly into production code, PRDs, and resilient,
+                  human-centered UI design systems.
+                </p>
+                <OutlinedCta href="/field-notes" className="mt-auto">
+                  Field Notes
+                </OutlinedCta>
+              </div>
             </article>
 
             <article className={heroCardNavy}>
-              <h2 className={`${cardTitleClass} text-[var(--hero-bg)]`}>
-                Core Philosophy
-              </h2>
-              <p className="font-sans text-[28px] font-bold leading-9 tracking-[-0.01em] text-[var(--hero-bg)]">
-                Design to code.
-              </p>
-              <p className={`${cardBodyClass} text-[var(--hero-bg)]`}>
-                Designing in the space between product and user. I bypass
-                traditional wireframe overhead, translating green-lit designs
-                straight into code and PRDs.
-              </p>
-            </article>
-
-            <article className={heroCardNavy}>
-              <h2 className={`${cardTitleClass} text-[var(--hero-bg)]`}>Case Study</h2>
-              <p className="font-sans text-[28px] font-bold leading-9 tracking-[-0.01em] text-[var(--hero-bg)]">
+              <h2 className={cardTitleClass}>Case Study</h2>
+              <p className="font-sans text-[28px] font-bold leading-9 tracking-[-0.01em]">
                 0 to 2.5 Million
               </p>
-              <p className={`${cardBodyClass} text-[var(--hero-bg)]`}>
-                Founding product designer for CredAbility. Designed the full
-                ecosystem, brand, and service strategy.
+              <p className={cardBodyClass}>
+                Founding product designer for CredAbility—architecting the full
+                product ecosystem, brand strategy, and dark web security
+                features to scale.
               </p>
-              <OpenProjectLink href="/works/credability" className="mt-auto">
+              <OutlinedCta href="/works/credability" className="mt-auto">
                 Open Project
-              </OpenProjectLink>
+              </OutlinedCta>
             </article>
           </div>
 

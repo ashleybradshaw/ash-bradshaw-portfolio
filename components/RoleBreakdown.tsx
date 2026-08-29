@@ -12,14 +12,14 @@ const DEFAULT_OPEN_ID = experienceRoles[0].id;
 function Badge({ type }: { type: RoleBadge }) {
   if (type === "current") {
     return (
-      <span className="inline-flex shrink-0 items-center justify-center rounded-[4px] bg-badge-current px-3.5 font-display text-[13px] font-bold uppercase leading-4 tracking-[-0.01em] text-badge-current-ink">
+      <span className="inline-flex shrink-0 items-center justify-center rounded-[4px] bg-badge-current px-[10px] font-display text-[13px] font-bold uppercase leading-4 tracking-[-0.01em] text-badge-current-ink">
         Current
       </span>
     );
   }
 
   return (
-    <span className="inline-flex shrink-0 items-center justify-center rounded-[4px] bg-taupe px-3.5 font-display text-[13px] font-bold uppercase leading-4 tracking-[-0.01em] text-cream-1">
+    <span className="inline-flex shrink-0 items-center justify-center rounded-[4px] bg-taupe px-[10px] font-display text-[13px] font-bold uppercase leading-4 tracking-[-0.01em] text-cream-1">
       Contract
     </span>
   );

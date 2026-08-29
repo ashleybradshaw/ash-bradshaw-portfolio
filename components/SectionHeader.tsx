@@ -23,13 +23,13 @@ export function DottedRule({
       <svg
         viewBox="0 0 1340 2"
         preserveAspectRatio="none"
-        className="h-0.5 w-full overflow-visible"
+        className="h-px w-full overflow-visible"
       >
         <path
           d="M0 1H1340"
           fill="none"
           stroke={tone === "red" ? "var(--hero-accent)" : "#E1DBC8"}
-          strokeWidth="2"
+          strokeWidth="1"
           strokeLinecap="round"
           strokeDasharray="6 3"
           vectorEffect="non-scaling-stroke"

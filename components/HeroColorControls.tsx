@@ -1,6 +1,14 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import {
+  SprayCanIcon,
+  type SprayCanIconHandle,
+} from "@animateicons/react/lucide";
+import { outlinedControlClass } from "@/components/Buttons";
 import { useHeroTokens } from "@/components/HeroTokensProvider";
+
+const SPRAY_DURATION = 1.15;
 
 export function HeroColorControls({
   compact = false,
@@ -8,16 +16,31 @@ export function HeroColorControls({
   compact?: boolean;
 }) {
   const { randomize } = useHeroTokens();
+  const iconRef = useRef<SprayCanIconHandle>(null);
 
-  const buttonClassName = compact
-    ? "shrink-0 border border-current px-2 py-1 font-sans text-[11px] font-bold uppercase leading-none tracking-[-0.01em] transition-[opacity,color,background-color] duration-[400ms] ease-in-out hover:opacity-80 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-current"
-    : "shrink-0 border border-current px-2.5 py-1.5 font-sans text-xs font-bold uppercase leading-none tracking-[-0.01em] transition-[opacity,color,background-color] duration-[400ms] ease-in-out hover:opacity-80 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-current";
+  useEffect(() => {
+    const play = () => iconRef.current?.startAnimation();
+    play();
+    const timer = window.setInterval(play, SPRAY_DURATION * 1000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   return (
-    <div className="flex shrink-0 items-center gap-2">
-      <button type="button" className={buttonClassName} onClick={randomize}>
-        New Colours
-      </button>
-    </div>
+    <button
+      type="button"
+      aria-label="Spray a new accessible colour palette"
+      className={`${outlinedControlClass} ${compact ? "px-2" : ""}`}
+      onClick={randomize}
+    >
+      <SprayCanIcon
+        ref={iconRef}
+        size={16}
+        color="currentColor"
+        duration={SPRAY_DURATION}
+        isAnimated
+        className="pointer-events-none shrink-0"
+      />
+      Spray
+    </button>
   );
 }

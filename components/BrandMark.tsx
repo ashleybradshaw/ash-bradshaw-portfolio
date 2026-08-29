@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 
 const MARK = "ASHLEYBRADSHAW";
@@ -12,12 +13,19 @@ type BrandMarkProps = {
 
 export function BrandMark({ className, onClick }: BrandMarkProps) {
   const prefersReducedMotion = useReducedMotion();
+  const pathname = usePathname();
   const letters = MARK.split("");
 
   return (
     <Link
-      href="/"
-      onClick={onClick}
+      href="/#top"
+      onClick={(event) => {
+        onClick?.();
+        if (pathname === "/") {
+          event.preventDefault();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }}
       aria-label="Ashley Bradshaw home"
       className={`${className} group`}
     >

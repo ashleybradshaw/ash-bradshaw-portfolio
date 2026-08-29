@@ -15,9 +15,8 @@ type NavItem = {
 };
 
 const primaryLinks: readonly NavItem[] = [
-  { href: "#works", label: "Works" },
-  { href: "#story", label: "Story" },
   { href: "#services", label: "Services" },
+  { href: "#works", label: "Works" },
   { href: "#about", label: "About" },
   { href: "/field-notes", label: "Field Notes" },
 ];
@@ -187,14 +186,12 @@ export function Nav() {
     : "flex shrink-0 items-center font-display text-base font-bold uppercase leading-6 tracking-[-0.01em] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-cream-1";
 
   const linkClassName = isHome
-    ? "relative z-10 inline-flex px-3 py-1.5 font-sans text-base font-bold uppercase leading-6 tracking-[-0.01em] text-[var(--hero-text)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--hero-accent)] focus-visible:ring-offset-2"
-    : "relative z-10 inline-flex px-3 py-1.5 font-sans text-base font-bold uppercase leading-6 tracking-[-0.01em] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2";
+    ? "relative z-10 inline-flex px-3 py-1.5 font-sans text-[12px] font-bold uppercase leading-4 tracking-[-0.01em] text-[var(--hero-text)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--hero-accent)] focus-visible:ring-offset-2"
+    : "relative z-10 inline-flex px-3 py-1.5 font-sans text-[12px] font-bold uppercase leading-4 tracking-[-0.01em] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2";
 
   const pillClassName = isHome
-    ? "absolute inset-0 rounded-full bg-[color-mix(in_srgb,var(--hero-text)_18%,transparent)]"
-    : scrolled
-      ? "absolute inset-0 rounded-full bg-brand-blue/10"
-      : "absolute inset-0 rounded-full bg-cream-1/60";
+    ? "absolute inset-0 rounded-[4px] bg-[color-mix(in_srgb,var(--hero-text)_18%,transparent)]"
+    : "absolute inset-0 rounded-[4px] bg-brand-blue/10";
 
   const menuButtonClassName = isHome
     ? "inline-flex items-center justify-center text-[var(--hero-text)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--hero-accent)] focus-visible:ring-offset-2 lg:hidden"

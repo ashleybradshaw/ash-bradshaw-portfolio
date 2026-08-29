@@ -26,6 +26,7 @@ export default function Home() {
   return (
     <>
       <MotionSection
+        id="top"
         aria-labelledby="hero-title"
         className="hero-canvas w-full pt-[72px] md:pt-[88px]"
       >
@@ -81,11 +82,8 @@ export default function Home() {
                 Founding product designer for CredAbility. Designed the full
                 ecosystem, brand, and service strategy.
               </p>
-              <OpenProjectLink
-                href="/works/credability"
-                className="mt-auto text-[var(--hero-bg)] underline decoration-[var(--hero-bg)] decoration-wavy underline-offset-4 hover:opacity-80"
-              >
-                Quick Read
+              <OpenProjectLink href="/works/credability" className="mt-auto">
+                Open Project
               </OpenProjectLink>
             </article>
           </div>
@@ -95,7 +93,7 @@ export default function Home() {
       </MotionSection>
 
       <MotionSection
-        id="story"
+        id="career-arc"
         aria-labelledby="career-arc-title"
         className="hero-canvas m-0 w-full"
       >

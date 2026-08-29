@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 
-const focusRing =
-  "focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[#FF0E00] focus-visible:ring-offset-2";
+export const outlinedControlClass =
+  "inline-flex w-fit items-center justify-center gap-2 rounded-[4px] border border-current px-3 py-1.5 font-sans text-[12px] font-bold uppercase leading-4 tracking-[-0.01em] transition-[opacity,color,border-color,background-color] duration-[400ms] ease-in-out hover:opacity-80 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-current";
 
 type CheckAvailabilityButtonProps = {
   href?: string;
@@ -19,7 +19,7 @@ export function CheckAvailabilityButton({
     <a
       href={href}
       onClick={onClick}
-      className={`inline-flex items-center justify-center rounded-[4px] bg-cream-2 px-5 py-2.5 font-sans text-base font-bold uppercase leading-6 tracking-[-0.01em] text-brand-red shadow-[0_4px_30px_#FF0E0033] transition-all hover:-translate-y-0.5 hover:opacity-90 ${focusRing} focus-visible:ring-offset-cream-1 ${className}`}
+      className={`inline-flex items-center justify-center rounded-[4px] bg-cream-2 px-5 py-2.5 font-sans text-base font-bold uppercase leading-6 tracking-[-0.01em] text-brand-red shadow-[0_4px_30px_#FF0E0033] transition-all hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-cream-1 ${className}`}
     >
       Check Availability
     </a>
@@ -40,7 +40,7 @@ export function OpenProjectLink({
   return (
     <Link
       href={href}
-      className={`inline-flex w-fit text-xs font-bold uppercase tracking-wider text-brand-red transition-all hover:-translate-y-0.5 hover:underline hover:underline-offset-4 hover:opacity-90 ${focusRing} ${className}`}
+      className={`${outlinedControlClass} ${className}`}
     >
       {children}
     </Link>
@@ -62,7 +62,7 @@ export function ExternalProjectCta({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`${typeof children === "string" ? children : "Open website"} (opens in a new tab)`}
-      className={`inline-flex items-center justify-center rounded-full border border-brand-blue/10 bg-white px-5 py-2.5 text-xs font-bold uppercase text-text-dark transition-all hover:-translate-y-0.5 hover:bg-brand-blue hover:text-white hover:opacity-90 ${focusRing} focus-visible:ring-offset-[#F7F6F9]`}
+      className="inline-flex items-center justify-center rounded-full border border-brand-blue/10 bg-white px-5 py-2.5 text-xs font-bold uppercase text-text-dark transition-all hover:-translate-y-0.5 hover:bg-brand-blue hover:text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-[#F7F6F9]"
     >
       {children}
     </a>

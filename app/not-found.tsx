@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <section className="flex min-h-screen flex-col bg-brand-red px-5 pb-16 pt-[120px] text-brand-blue md:px-[50px]">
+    <section className="hero-canvas flex min-h-screen flex-col px-5 pb-16 pt-[120px] md:px-[50px]">
       <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col items-center justify-center text-center">
         <p className="mb-4 font-display text-base font-bold uppercase tracking-[-0.01em]">
           Lost in the system
@@ -25,7 +25,7 @@ export default function NotFound() {
         </p>
         <Link
           href="/"
-          className="mt-10 inline-flex items-center justify-center gap-2 rounded-full bg-brand-blue px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-cream-1 transition-all hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-cream-1 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-red"
+          className="mt-10 inline-flex items-center justify-center gap-2 rounded-full bg-[var(--hero-accent)] px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-[var(--hero-bg)] transition-[background-color,color,transform] duration-[400ms] ease-in-out hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--hero-text)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-bg)]"
         >
           Back Home
           <ArrowRightFromLine size={16} strokeWidth={2} aria-hidden="true" />

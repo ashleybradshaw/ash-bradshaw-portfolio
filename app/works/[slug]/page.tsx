@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ExternalProjectCta, OpenProjectLink } from "@/components/Buttons";
 import { MorphSlider } from "@/components/MorphSlider";
+import { PixelDivider } from "@/components/PixelDivider";
 import { getProject, projects } from "@/lib/projects";
 
 const sectionShell =
@@ -68,13 +69,13 @@ export default async function ProjectPage({
   const moreWork = projects.filter((item) => item.slug !== project.slug);
 
   return (
-    <article className="bg-cream-1 pt-[72px] text-text-dark md:pt-[84px]">
-      <header className="w-full bg-cream-1">
+    <article className="bg-cream-1 text-text-dark">
+      <header className="hero-canvas w-full pt-[72px] md:pt-[88px]">
         <div className={`${sectionShell} pt-10 lg:pt-12`}>
-          <h1 className="max-w-[1320px] font-display text-[clamp(2.5rem,6vw,4.25rem)] font-bold uppercase leading-[1.2] tracking-[-0.01em]">
+          <h1 className="max-w-[1320px] font-display text-[clamp(2.5rem,6vw,4.25rem)] font-bold uppercase leading-[1.2] tracking-[-0.01em] text-[var(--hero-text)]">
             {project.title}
           </h1>
-          <p className="mt-2.5 max-w-[841px] font-sans text-base font-bold leading-6 tracking-[-0.01em]">
+          <p className="mt-2.5 max-w-[841px] font-sans text-base font-bold leading-6 tracking-[-0.01em] text-[var(--hero-text)]">
             {project.headerSubtitle}
           </p>
           <dl className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-2">
@@ -83,7 +84,7 @@ export default async function ProjectPage({
                 <dt className="inline-flex items-center rounded-sm bg-neutral-400 px-3.5 py-1 font-display text-[13px] font-bold uppercase leading-4 tracking-[-0.01em] text-white">
                   {item.label}
                 </dt>
-                <dd className="font-display text-[13px] font-bold uppercase leading-4 tracking-[-0.01em]">
+                <dd className="font-display text-[13px] font-bold uppercase leading-4 tracking-[-0.01em] text-[var(--hero-text)]">
                   {item.value}
                 </dd>
               </div>
@@ -106,6 +107,8 @@ export default async function ProjectPage({
         </div>
       </header>
 
+      <PixelDivider />
+
       <section className="w-full bg-cream-1">
         <div
           className={`${sectionShell} grid grid-cols-1 gap-12 py-16 lg:grid-cols-12 lg:gap-16 lg:py-24`}
@@ -119,7 +122,7 @@ export default async function ProjectPage({
                 <a
                   key={item.href}
                   href={item.href}
-                  className="w-fit font-sans text-xs font-semibold uppercase tracking-wide transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-calm-light"
+                  className="w-fit font-sans text-xs font-semibold uppercase tracking-wide transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--hero-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-calm-light"
                 >
                   {item.label}
                 </a>
@@ -214,6 +217,8 @@ export default async function ProjectPage({
           </div>
         </div>
       </section>
+
+      <PixelDivider direction="cream-to-red" />
     </article>
   );
 }

@@ -58,9 +58,9 @@ export default function Home() {
             <article className={heroCardOutline}>
               <h2 className={cardTitleClass}>Where I Am</h2>
               <p className={cardBodyClass}>
-                Architecting next-generation wealth management platforms at
-                Lloyds Banking Group, bridging complex service design with
-                scalable digital product ecosystems.
+                Leading product design with a new team at Lloyds Banking
+                Group, modernising stocks, shares, and pension platforms from
+                early ideation through to validation.
               </p>
               <OutlinedCta
                 href="https://www.linkedin.com/in/ashleyjohnbradshaw/"
@@ -76,9 +76,9 @@ export default function Home() {
               <div className="relative z-10 flex h-full min-h-[280px] flex-col items-start gap-2.5 p-5">
                 <h2 className={cardTitleClass}>Core Philosophy</h2>
                 <p className={cardBodyClass}>
-                  Bypassing wireframe overhead by translating green-lit product
-                  designs directly into production code, PRDs, and resilient,
-                  human-centered UI design systems.
+                  Designing in the space where product meets human behaviour. I
+                  bypass wireframe overhead, translating green-lit designs
+                  straight into production code and PRDs.
                 </p>
                 <OutlinedCta href="/field-notes" className="mt-auto">
                   Field Notes
@@ -88,13 +88,10 @@ export default function Home() {
 
             <article className={heroCardNavy}>
               <h2 className={cardTitleClass}>Case Study</h2>
-              <p className="font-sans text-[28px] font-bold leading-9 tracking-[-0.01em]">
-                0 to 2.5 Million
-              </p>
               <p className={cardBodyClass}>
-                Founding product designer for CredAbility—architecting the full
-                product ecosystem, brand strategy, and dark web security
-                features to scale.
+                Founding product designer leading creative for almost four
+                years, building the full product ecosystem, brand strategy,
+                and scaling the app from 0 to 2.5M users.
               </p>
               <OutlinedCta href="/works/credability" className="mt-auto">
                 Open Project

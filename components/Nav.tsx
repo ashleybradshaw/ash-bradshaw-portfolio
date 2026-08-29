@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { BrandMark } from "@/components/BrandMark";
@@ -156,8 +155,6 @@ export function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
-  const isHome = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => {
@@ -170,44 +167,32 @@ export function Nav() {
   }, []);
 
   const headerClassName = [
-    "fixed top-0 left-0 z-50 w-full transition-[background-color,color,backdrop-filter,border-color,box-shadow] duration-[400ms] ease-in-out",
-    isHome
-      ? "text-[var(--hero-text)]"
-      : "text-text-dark",
-    !isHome
-      ? "border-b border-brand-blue/10 bg-cream-1/75 shadow-[0_8px_30px_rgb(10_1_39/0.06)] backdrop-blur-xl"
-      : scrolled
-        ? "border-b border-[color-mix(in_srgb,var(--hero-accent)_22%,transparent)] bg-[color-mix(in_srgb,var(--hero-bg)_82%,transparent)] shadow-[0_8px_30px_rgb(10_1_39/0.12)] backdrop-blur-xl"
-        : "border-b border-transparent bg-transparent",
+    "fixed top-0 left-0 z-50 w-full text-[var(--hero-text)] transition-[background-color,color,backdrop-filter,border-color,box-shadow] duration-[400ms] ease-in-out",
+    scrolled
+      ? "border-b border-[color-mix(in_srgb,var(--hero-accent)_22%,transparent)] bg-[color-mix(in_srgb,var(--hero-bg)_82%,transparent)] shadow-[0_8px_30px_rgb(10_1_39/0.12)] backdrop-blur-xl"
+      : "border-b border-transparent bg-transparent",
   ].join(" ");
 
-  const logoClassName = isHome
-    ? "flex shrink-0 items-center font-display text-base font-bold uppercase leading-6 tracking-[-0.01em] text-[var(--hero-text)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--hero-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-bg)]"
-    : "flex shrink-0 items-center font-display text-base font-bold uppercase leading-6 tracking-[-0.01em] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-cream-1";
+  const logoClassName =
+    "flex shrink-0 items-center font-display text-base font-bold uppercase leading-6 tracking-[-0.01em] text-[var(--hero-text)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--hero-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-bg)]";
 
-  const linkClassName = isHome
-    ? "relative z-10 inline-flex px-3 py-1.5 font-sans text-[12px] font-bold uppercase leading-4 tracking-[-0.01em] text-[var(--hero-text)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--hero-accent)] focus-visible:ring-offset-2"
-    : "relative z-10 inline-flex px-3 py-1.5 font-sans text-[12px] font-bold uppercase leading-4 tracking-[-0.01em] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2";
+  const linkClassName =
+    "relative z-10 inline-flex px-3 py-1.5 font-sans text-[12px] font-bold uppercase leading-4 tracking-[-0.01em] text-[var(--hero-text)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--hero-accent)] focus-visible:ring-offset-2";
 
-  const pillClassName = isHome
-    ? "absolute inset-0 rounded-[4px] bg-[color-mix(in_srgb,var(--hero-text)_18%,transparent)]"
-    : "absolute inset-0 rounded-[4px] bg-brand-blue/10";
+  const pillClassName =
+    "absolute inset-0 rounded-[4px] bg-[color-mix(in_srgb,var(--hero-text)_18%,transparent)]";
 
-  const menuButtonClassName = isHome
-    ? "inline-flex items-center justify-center text-[var(--hero-text)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--hero-accent)] focus-visible:ring-offset-2 lg:hidden"
-    : "inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2 lg:hidden";
+  const menuButtonClassName =
+    "inline-flex items-center justify-center text-[var(--hero-text)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--hero-accent)] focus-visible:ring-offset-2 lg:hidden";
 
-  const overlayClassName = isHome
-    ? "fixed inset-0 z-40 flex flex-col bg-[var(--hero-bg)] text-[var(--hero-text)] transition-[background-color,color] duration-[400ms] ease-in-out lg:hidden"
-    : "fixed inset-0 z-40 flex flex-col bg-cream-1 text-text-dark lg:hidden";
+  const overlayClassName =
+    "fixed inset-0 z-40 flex flex-col bg-[var(--hero-bg)] text-[var(--hero-text)] transition-[background-color,color] duration-[400ms] ease-in-out lg:hidden";
 
-  const mobileLinkClassName = isHome
-    ? "font-display text-3xl font-bold uppercase tracking-[-0.02em] text-[var(--hero-text)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--hero-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-bg)]"
-    : "font-display text-3xl font-bold uppercase tracking-[-0.02em] text-text-dark focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-cream-1";
+  const mobileLinkClassName =
+    "font-display text-3xl font-bold uppercase tracking-[-0.02em] text-[var(--hero-text)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--hero-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-bg)]";
 
-  const spacerClassName = isHome
-    ? "hidden h-6 shrink-0 bg-[var(--hero-accent)] transition-colors duration-[400ms] ease-in-out xl:block"
-    : "hidden h-6 shrink-0 bg-brand-blue xl:block";
+  const spacerClassName =
+    "hidden h-6 shrink-0 bg-[var(--hero-accent)] transition-colors duration-[400ms] ease-in-out xl:block";
 
   useEffect(() => {
     if (!isOpen) {
@@ -280,12 +265,12 @@ export function Nav() {
                 linkClassName={linkClassName}
               />
 
-              {isHome ? <HeroColorControls /> : null}
+              <HeroColorControls />
             </div>
           </LayoutGroup>
 
           <div className="ml-auto flex items-center gap-3 lg:hidden">
-            {isHome ? <HeroColorControls compact /> : null}
+            <HeroColorControls compact />
             <button
               type="button"
               className={menuButtonClassName}
@@ -334,11 +319,9 @@ export function Nav() {
                   />
                 </motion.li>
               ))}
-              {isHome ? (
-                <motion.li variants={itemVariants} className="pt-4">
-                  <HeroColorControls />
-                </motion.li>
-              ) : null}
+              <motion.li variants={itemVariants} className="pt-4">
+                <HeroColorControls />
+              </motion.li>
             </motion.ul>
           </motion.div>
         ) : null}

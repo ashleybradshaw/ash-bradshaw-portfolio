@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { LiveClock } from "@/components/LiveClock";
 
 const socialLinks = [
@@ -13,47 +12,34 @@ const socialLinks = [
   { href: "https://x.com/ashjonbradshaw", label: "X" },
 ] as const;
 
-type FooterVariant = "red" | "blue";
+const metaClass =
+  "shrink-0 font-sans text-[12px] font-bold uppercase leading-6 tracking-[-0.01em] text-[var(--hero-text)] transition-[color] duration-[400ms] ease-in-out";
 
-type FooterProps = {
-  variant?: FooterVariant;
-};
+const logoClass =
+  "shrink-0 font-display text-base font-bold uppercase leading-6 tracking-[-0.01em] text-[var(--hero-text)] transition-[color] duration-[400ms] ease-in-out";
 
-export function Footer({ variant }: FooterProps) {
-  const pathname = usePathname();
-  const resolvedVariant: FooterVariant =
-    variant ?? (pathname === "/" ? "red" : "blue");
-  const isRed = resolvedVariant === "red";
+const linkClass = `${metaClass} hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--hero-text)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-bg)]`;
 
-  const textClass = isRed
-    ? "shrink-0 font-sans text-base font-bold uppercase leading-6 tracking-[-0.01em] text-[var(--hero-text)] transition-[color] duration-[400ms] ease-in-out"
-    : "shrink-0 font-sans text-base font-bold uppercase leading-6 tracking-[-0.01em] text-cream-1";
+const spacerClass =
+  "hidden h-6 min-w-8 flex-1 bg-[var(--hero-accent)] transition-colors duration-[400ms] ease-in-out xl:block";
 
-  const logoClass = isRed
-    ? "shrink-0 font-display text-base font-bold uppercase leading-6 tracking-[-0.01em] text-[var(--hero-text)] transition-[color] duration-[400ms] ease-in-out"
-    : "shrink-0 font-display text-base font-bold uppercase leading-6 tracking-[-0.01em] text-cream-1";
-
-  const linkClass = isRed
-    ? `${textClass} hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--hero-text)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-bg)]`
-    : `${textClass} transition-all hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[#FF0E00] focus-visible:ring-offset-2 focus-visible:ring-offset-[#13014C]`;
-
+export function Footer() {
   return (
-    <footer
-      className={
-        isRed
-          ? "hero-canvas relative -mt-px w-full shadow-[0_-1px_0_0_var(--hero-bg)]"
-          : "w-full bg-brand-blue text-cream-1"
-      }
-    >
-      <div className="mx-auto flex w-full max-w-[1440px] flex-col items-start gap-6 px-5 py-10 sm:px-8 lg:flex-row lg:flex-nowrap lg:items-center lg:justify-between lg:gap-8 lg:px-[50px] lg:py-12">
+    <footer className="hero-canvas relative -mt-px w-full shadow-[0_-1px_0_0_var(--hero-bg)]">
+      <div className="mx-auto flex w-full max-w-[1440px] flex-col items-start gap-6 px-5 py-10 sm:px-8 lg:flex-row lg:flex-nowrap lg:items-center lg:justify-between lg:gap-5 lg:px-[50px] lg:py-12">
         <p className={logoClass}>ASHLEYBRADSHAW</p>
 
-        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-8 lg:justify-center">
-          <p className={textClass}>© 2026 ASHLEYBRADSHAW LIMITED</p>
-          <p className={textClass}>
-            <LiveClock />
-          </p>
-        </div>
+        <div aria-hidden="true" className={spacerClass} />
+
+        <p className={metaClass}>© 2026 ASHLEYBRADSHAW LIMITED</p>
+
+        <div aria-hidden="true" className={spacerClass} />
+
+        <p className={metaClass}>
+          <LiveClock />
+        </p>
+
+        <div aria-hidden="true" className={spacerClass} />
 
         <div className="flex flex-wrap items-center gap-5 lg:shrink-0">
           {socialLinks.map((item) => (

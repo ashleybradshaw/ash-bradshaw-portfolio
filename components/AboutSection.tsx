@@ -3,17 +3,27 @@ import { MotionSection } from "@/components/MotionSection";
 import { RoleBreakdown } from "@/components/RoleBreakdown";
 import { SectionHeader } from "@/components/SectionHeader";
 
-export function AboutSection() {
+type AboutSectionProps = {
+  hideHeader?: boolean;
+};
+
+export function AboutSection({ hideHeader = false }: AboutSectionProps) {
   return (
     <MotionSection
       id="about"
-      aria-labelledby="about-title"
+      aria-labelledby={hideHeader ? "about-page-title" : "about-title"}
       className="relative z-0 bg-cream-1 text-text-dark"
     >
       <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-[50px]">
-        <SectionHeader titleId="about-title" subtitle="About" title="Walking the line" />
+        {hideHeader ? null : (
+          <SectionHeader titleId="about-title" subtitle="About" title="Walking the line" />
+        )}
 
-        <div className="flex flex-col items-start gap-12 pb-16 lg:flex-row lg:justify-between lg:gap-10 lg:pb-24">
+        <div
+          className={`flex flex-col items-start gap-12 pb-16 lg:flex-row lg:justify-between lg:gap-10 lg:pb-24 ${
+            hideHeader ? "pt-12 lg:pt-16" : ""
+          }`}
+        >
           <div className="flex max-w-[660px] flex-col items-start gap-[30px] p-5">
             <h3 className="font-display text-base font-bold uppercase leading-6 tracking-[-0.01em] text-text-dark">
               Ash jon Bradshaw ‘The Hard Sell’

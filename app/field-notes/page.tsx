@@ -6,7 +6,7 @@ export default function FieldNotesPage() {
   return (
     <>
       <section className="hero-canvas w-full pt-[72px] md:pt-[88px]">
-        <div className="mx-auto w-full max-w-[1440px] px-5 pt-8 sm:px-8 lg:px-[50px]">
+        <div className="mx-auto w-full max-w-[1440px] px-5 pb-12 pt-8 sm:px-8 md:pb-16 lg:px-[50px]">
           <SectionHeader
             as="h1"
             size="hero"
@@ -21,7 +21,7 @@ export default function FieldNotesPage() {
 
       <PixelDivider />
 
-      <section className="flex flex-1 flex-col bg-cream-1 px-5 pb-24 pt-8 text-text-dark md:px-[50px]">
+      <section className="relative -mt-px flex flex-1 flex-col bg-cream-1 px-5 pb-24 pt-8 text-text-dark md:px-[50px]">
         <div className="mx-auto w-full max-w-[1440px]">
           <p className="max-w-2xl font-sans text-base font-bold leading-6 tracking-[-0.01em]">
             Essays, process notes, and build logs will land here. In the

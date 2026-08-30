@@ -13,7 +13,7 @@ export default function AboutPage() {
   return (
     <>
       <section className="hero-canvas w-full pt-[72px] md:pt-[88px]">
-        <div className="mx-auto w-full max-w-[1440px] px-5 pt-8 sm:px-8 lg:px-[50px]">
+        <div className="mx-auto w-full max-w-[1440px] px-5 pb-12 pt-8 sm:px-8 md:pb-16 lg:px-[50px]">
           <SectionHeader
             as="h1"
             size="hero"

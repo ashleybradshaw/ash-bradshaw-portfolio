@@ -108,7 +108,7 @@ export default function Home() {
         aria-labelledby="career-arc-title"
         className="hero-canvas m-0 w-full"
       >
-        <div className="mx-auto w-full max-w-[1440px] px-5 pb-0 sm:px-8 lg:px-[50px]">
+        <div className="mx-auto w-full max-w-[1440px] px-5 pb-12 sm:px-8 md:pb-16 lg:px-[50px]">
           <div className="relative min-h-[609px] overflow-hidden rounded-sm bg-[var(--hero-accent)] shadow-[0_4px_60px_20px_rgb(0_0_85/0.2)] transition-colors duration-[400ms] ease-in-out">
             <Image
               src="/ashley-portrait.png"

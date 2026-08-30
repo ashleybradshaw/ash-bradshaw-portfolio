@@ -51,7 +51,7 @@ export function ServicesSection() {
     <section
       id="services"
       aria-labelledby="capabilities-title"
-      className="m-0 bg-cream-1 text-text-dark"
+      className="relative -mt-px m-0 bg-cream-1 text-text-dark"
     >
       <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-[50px]">
         <SectionHeader

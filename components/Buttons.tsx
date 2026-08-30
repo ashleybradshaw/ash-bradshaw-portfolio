@@ -105,7 +105,7 @@ export function ExternalProjectCta({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`${typeof children === "string" ? children : "Open website"} (opens in a new tab)`}
-      className="inline-flex items-center justify-center rounded-full border border-brand-blue/10 bg-white px-5 py-2.5 text-xs font-bold uppercase text-text-dark transition-all hover:-translate-y-0.5 hover:bg-brand-blue hover:text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-[#F7F6F9]"
+      className="inline-flex w-fit items-center justify-center rounded-[4px] border border-current px-4 py-2 font-sans text-xs font-bold uppercase tracking-wider transition-colors hover:bg-current hover:text-white focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-current"
     >
       {children}
     </a>

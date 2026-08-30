@@ -12,7 +12,7 @@ export function AboutSection({ hideHeader = false }: AboutSectionProps) {
     <MotionSection
       id="about"
       aria-labelledby={hideHeader ? "about-page-title" : "about-title"}
-      className="relative z-0 bg-cream-1 text-text-dark"
+      className="relative z-0 -mt-px bg-cream-1 text-text-dark"
     >
       <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-[50px]">
         {hideHeader ? null : (

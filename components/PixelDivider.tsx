@@ -50,16 +50,21 @@ function buildPixels(cols: number, rows: number) {
 
   for (let row = 0; row < rows; row += 1) {
     const rowProgress = rows <= 1 ? 0.5 : row / (rows - 1);
+    // Ease the vertical band so density thins into the destination color
+    // instead of slamming into a hard strip at the canvas edge.
+    const verticalBand = Math.pow(1 - rowProgress, 1.45);
 
     for (let col = 0; col < cols; col += 1) {
       const threshold = clamp(
-        0.02 +
-          0.8 * (1 - rowProgress) +
-          (random() - 0.5) * 0.34 +
-          (random() - 0.5) * 0.08 +
-          0.03 * Math.sin(0.72 * col + 1.13 * row),
-        0.02,
-        0.94,
+        0.01 +
+          0.74 * verticalBand +
+          (random() - 0.5) * 0.26 +
+          (random() - 0.5) * 0.06 +
+          0.025 * Math.sin(0.72 * col + 1.13 * row) -
+          // Bias the final rows toward an early destination fill
+          0.12 * Math.pow(rowProgress, 2.2),
+        0.01,
+        0.9,
       );
       pixels.push({ row, col, threshold });
     }
@@ -109,10 +114,11 @@ function paint(
 function measureProgress(element: HTMLElement) {
   const rect = element.getBoundingClientRect();
   const windowHeight = window.innerHeight;
-  const travel = 0.38 * windowHeight + rect.height;
+  // Longer travel + taller canvas = softer scroll dissolve instead of a hard edge.
+  const travel = 0.52 * windowHeight + rect.height;
   const raw = clamp((windowHeight - rect.top) / travel);
-  const start = window.innerWidth < 1024 ? 0.18 : 0.4;
-  return clamp((raw - start) / (0.99 - start), 0, 0.7);
+  const start = window.innerWidth < 1024 ? 0.14 : 0.32;
+  return clamp((raw - start) / (0.98 - start), 0, 0.92);
 }
 
 export function PixelDivider({
@@ -216,15 +222,16 @@ export function PixelDivider({
     <div
       ref={containerRef}
       aria-hidden="true"
-      className={`relative m-0 w-full overflow-hidden p-0 aspect-[48/14] transition-[background-color] duration-[400ms] ease-in-out lg:aspect-[48/8] ${
-        direction === "cream-to-red" ? "-mb-px" : ""
-      }`}
+      className="relative -mb-px m-0 h-[clamp(200px,22vw,240px)] min-h-[200px] w-full overflow-hidden p-0 transition-[background-color] duration-[400ms] ease-in-out"
       style={{
         backgroundColor:
           direction === "cream-to-red" ? "var(--hero-bg)" : from,
       }}
     >
-      <canvas ref={canvasRef} className="block h-full w-full align-top" />
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 block h-full w-full"
+      />
     </div>
   );
 }

@@ -29,14 +29,23 @@ export type Project = {
   websiteUrl?: string;
 };
 
-function projectHeroImage(slug: ProjectSlug): string {
-  return `/projects/${slug}/hero-1.png`;
+type ProjectImageExt = "png" | "webp";
+
+function projectHeroImage(
+  slug: ProjectSlug,
+  ext: ProjectImageExt = "png",
+): string {
+  return `/projects/${slug}/hero-1.${ext}`;
 }
 
-function projectImages(slug: ProjectSlug, count: number): string[] {
+function projectImages(
+  slug: ProjectSlug,
+  count: number,
+  ext: ProjectImageExt = "png",
+): string[] {
   return Array.from(
     { length: count },
-    (_, index) => `/projects/${slug}/slide-${index + 1}.png`,
+    (_, index) => `/projects/${slug}/slide-${index + 1}.${ext}`,
   );
 }
 
@@ -66,8 +75,8 @@ export const projects: Project[] = [
         "3–4x improvement in targeted application completion rates.",
       ],
     },
-    heroImage: projectHeroImage("credability"),
-    images: projectImages("credability", 6),
+    heroImage: projectHeroImage("credability", "webp"),
+    images: projectImages("credability", 8, "webp"),
     websiteUrl: "https://credability.co.uk",
   },
   {

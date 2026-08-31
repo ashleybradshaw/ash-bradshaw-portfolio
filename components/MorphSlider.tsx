@@ -289,9 +289,9 @@ export function MorphSlider({ images, title }: MorphSliderProps) {
                   className="flex h-8 items-center justify-center px-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-taupe focus-visible:ring-offset-2 focus-visible:ring-offset-cream-1"
                 >
                   {isActive ? (
-                    <span className="relative block h-[6px] w-7 overflow-hidden rounded-full bg-taupe/25">
+                    <span className="relative block h-[6px] w-7 overflow-hidden rounded-full bg-taupe">
                       <span
-                        className={`gallery-progress-fill absolute inset-y-0 left-0 w-full rounded-full bg-taupe ${
+                        className={`gallery-progress-fill absolute inset-y-0 left-0 w-full rounded-full bg-[color-mix(in_srgb,var(--color-taupe),var(--color-text-dark)_40%)] ${
                           isPlaying && !hasEnded && !reduceMotion
                             ? ""
                             : "is-paused"

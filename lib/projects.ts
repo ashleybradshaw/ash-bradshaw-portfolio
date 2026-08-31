@@ -95,7 +95,7 @@ export const projects: Project[] = [
       ],
     },
     heroImage: projectHeroImage("repdaily"),
-    images: projectImages("repdaily", 12),
+    images: projectImages("repdaily", 6),
   },
   {
     slug: "readygo",

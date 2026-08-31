@@ -29,18 +29,22 @@ export function HeroColorControls({
     <button
       type="button"
       aria-label="Spray a new accessible colour palette"
-      className={`${outlinedControlClass} ${compact ? "px-2" : ""}`}
+      className={`${outlinedControlClass} relative overflow-hidden ${compact ? "px-2" : ""}`}
       onClick={randomize}
     >
-      <SprayCanIcon
-        ref={iconRef}
-        size={16}
-        color="currentColor"
-        duration={SPRAY_DURATION}
-        isAnimated
-        className="pointer-events-none shrink-0"
-      />
-      Spray
+      <span className="relative z-10 inline-flex items-center gap-2">
+        <SprayCanIcon
+          ref={iconRef}
+          size={16}
+          color="currentColor"
+          duration={SPRAY_DURATION}
+          isAnimated
+          className="pointer-events-none shrink-0"
+        />
+        Spray
+      </span>
+      <span aria-hidden="true" className="spray-shine-wash" />
+      <span aria-hidden="true" className="spray-shine-edge" />
     </button>
   );
 }

@@ -30,7 +30,7 @@ function relativeLuminance(hex: string) {
   );
 }
 
-export function contrastRatio(first: string, second: string) {
+function contrastRatio(first: string, second: string) {
   const a = relativeLuminance(first);
   const b = relativeLuminance(second);
   const lighter = Math.max(a, b);

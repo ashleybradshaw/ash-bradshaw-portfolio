@@ -34,7 +34,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col bg-cream-1 font-sans text-text-dark">
         <HeroTokensProvider>
           <Nav />
-          <main className="flex flex-1 flex-col bg-inherit">{children}</main>
+          <main className="flex min-w-0 flex-1 flex-col bg-inherit">{children}</main>
           <Footer />
         </HeroTokensProvider>
       </body>

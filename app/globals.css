@@ -39,3 +39,94 @@ body {
   font-family: var(--font-plus-jakarta), sans-serif;
   overflow-x: hidden;
 }
+
+.spray-shine-wash,
+.spray-shine-edge {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  background-image: linear-gradient(
+    -75deg,
+    transparent 28%,
+    var(--spray-shine) 50%,
+    transparent 72%
+  );
+  background-size: 220% 100%;
+  background-repeat: no-repeat;
+  animation: spray-shine-sweep 2.3s linear infinite;
+}
+
+.spray-shine-wash {
+  --spray-shine: color-mix(in srgb, currentColor 22%, transparent);
+  mix-blend-mode: overlay;
+}
+
+.spray-shine-edge {
+  --spray-shine: color-mix(in srgb, currentColor 72%, transparent);
+  padding: 1px;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+}
+
+@keyframes spray-shine-sweep {
+  0% {
+    background-position: 120% 0;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  48% {
+    background-position: -20% 0;
+    opacity: 0;
+  }
+  100% {
+    background-position: -20% 0;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spray-shine-wash,
+  .spray-shine-edge {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+@keyframes gallery-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.gallery-progress-fill {
+  transform-origin: left center;
+  animation: gallery-progress 6s linear forwards;
+}
+
+.gallery-progress-fill.is-paused {
+  animation-play-state: paused;
+}
+
+.gallery-progress-fill.is-complete {
+  animation: none;
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-progress-fill {
+    animation: none;
+    transform: scaleX(1);
+  }
+}

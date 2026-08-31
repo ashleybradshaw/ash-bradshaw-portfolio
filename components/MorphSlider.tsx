@@ -1,166 +1,332 @@
 "use client";
 
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Pause, Play, RotateCcw } from "lucide-react";
+import { useReducedMotion } from "framer-motion";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from "react";
 
 type MorphSliderProps = {
   images: string[];
   title: string;
 };
 
-const pairVariants = {
-  enter: (direction: number) => ({
-    x: direction > 0 ? 20 : -20,
-    opacity: 0,
-  }),
-  center: {
-    x: 0,
-    opacity: 1,
-  },
-  exit: (direction: number) => ({
-    x: direction > 0 ? -20 : 20,
-    opacity: 0,
-  }),
-};
-
-function useGalleryPerPage(): 1 | 2 {
-  const [perPage, setPerPage] = useState<1 | 2>(1);
-
-  useEffect(() => {
-    const media = window.matchMedia("(min-width: 768px)");
-    const apply = () => {
-      setPerPage(media.matches ? 2 : 1);
-    };
-
-    apply();
-    media.addEventListener("change", apply);
-    return () => media.removeEventListener("change", apply);
-  }, []);
-
-  return perPage;
-}
+const MAX_SLIDES = 6;
+const AUTO_MS = 6000;
+const PLACEHOLDER_TONES = [
+  "#d6d6d6",
+  "#c9c9c9",
+  "#bcbcbc",
+  "#b0b0b0",
+  "#a4a4a4",
+  "#989898",
+] as const;
 
 export function MorphSlider({ images, title }: MorphSliderProps) {
-  const slides = images.filter((src) => src.length > 0);
-  const perPage = useGalleryPerPage();
-  const pageCount = Math.max(1, Math.ceil(slides.length / perPage));
-  const [[page, direction], setPage] = useState<[number, number]>([0, 0]);
-  const currentPage = ((page % pageCount) + pageCount) % pageCount;
-  const visibleSlides = slides.slice(
-    currentPage * perPage,
-    currentPage * perPage + perPage,
-  );
+  const labelId = useId();
+  const reduceMotion = useReducedMotion();
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const programmaticScroll = useRef(false);
+  const slideSrcs = images.filter((src) => src.length > 0).slice(0, MAX_SLIDES);
+  const slideCount = Math.min(MAX_SLIDES, slideSrcs.length || MAX_SLIDES);
+  const slides = Array.from({ length: slideCount }, (_, index) => index);
 
-  const paginate = (delta: number) => {
-    setPage([currentPage + delta, delta]);
-  };
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [hasEnded, setHasEnded] = useState(false);
+  const [fitsAll, setFitsAll] = useState(false);
 
-  const goToPage = (nextPage: number) => {
-    if (nextPage === currentPage) {
+  const measureOverflow = useCallback(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) {
       return;
     }
 
-    setPage([nextPage, nextPage > currentPage ? 1 : -1]);
+    setFitsAll(viewport.scrollWidth <= viewport.clientWidth + 1);
+  }, []);
+
+  const syncIndexFromScroll = useCallback(() => {
+    const viewport = viewportRef.current;
+    const first = viewport?.querySelector("li");
+    if (!viewport || !(first instanceof HTMLElement)) {
+      return;
+    }
+
+    const styles = window.getComputedStyle(viewport.querySelector("ul") ?? viewport);
+    const gap = Number.parseFloat(styles.columnGap || styles.gap) || 0;
+    const stride = first.offsetWidth + gap;
+    if (stride <= 0) {
+      return;
+    }
+
+    const nextIndex = Math.min(
+      slideCount - 1,
+      Math.max(0, Math.round(viewport.scrollLeft / stride)),
+    );
+    setActiveIndex(nextIndex);
+  }, [slideCount]);
+
+  const goTo = useCallback(
+    (index: number, { userInitiated = false } = {}) => {
+      const viewport = viewportRef.current;
+      const target = viewport?.querySelectorAll("li")[index];
+      if (!viewport || !(target instanceof HTMLElement)) {
+        return;
+      }
+
+      const nextIndex = Math.min(slideCount - 1, Math.max(0, index));
+      programmaticScroll.current = true;
+      setActiveIndex(nextIndex);
+      setHasEnded(false);
+      if (userInitiated) {
+        setIsPlaying(false);
+      }
+
+      const maxScroll = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+      const viewportLeft = viewport.getBoundingClientRect().left;
+      const targetLeft =
+        target.getBoundingClientRect().left - viewportLeft + viewport.scrollLeft;
+      const nextLeft = Math.min(maxScroll, Math.max(0, targetLeft));
+
+      viewport.scrollTo({
+        left: nextLeft,
+        behavior: reduceMotion || fitsAll ? "auto" : "smooth",
+      });
+
+      window.setTimeout(() => {
+        programmaticScroll.current = false;
+      }, reduceMotion ? 50 : 450);
+    },
+    [fitsAll, reduceMotion, slideCount],
+  );
+
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) {
+      return;
+    }
+
+    measureOverflow();
+    const observer = new ResizeObserver(measureOverflow);
+    observer.observe(viewport);
+    window.addEventListener("resize", measureOverflow);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measureOverflow);
+    };
+  }, [measureOverflow, slideCount]);
+
+  useEffect(() => {
+    if (reduceMotion || fitsAll) {
+      setIsPlaying(false);
+      return;
+    }
+
+    setIsPlaying(true);
+  }, [fitsAll, reduceMotion]);
+
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) {
+      return;
+    }
+
+    const onScroll = () => {
+      if (programmaticScroll.current) {
+        syncIndexFromScroll();
+        return;
+      }
+
+      setIsPlaying(false);
+      setHasEnded(false);
+      syncIndexFromScroll();
+    };
+
+    viewport.addEventListener("scroll", onScroll, { passive: true });
+    return () => viewport.removeEventListener("scroll", onScroll);
+  }, [syncIndexFromScroll]);
+
+  useEffect(() => {
+    if (!isPlaying || reduceMotion || hasEnded || fitsAll) {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      if (activeIndex >= slideCount - 1) {
+        setIsPlaying(false);
+        setHasEnded(true);
+        return;
+      }
+
+      goTo(activeIndex + 1);
+    }, AUTO_MS);
+
+    return () => window.clearTimeout(timer);
+  }, [
+    activeIndex,
+    fitsAll,
+    goTo,
+    hasEnded,
+    isPlaying,
+    reduceMotion,
+    slideCount,
+  ]);
+
+  const togglePlayback = () => {
+    if (hasEnded || activeIndex >= slideCount - 1) {
+      goTo(0);
+      setHasEnded(false);
+      if (!reduceMotion && !fitsAll) {
+        setIsPlaying(true);
+      }
+      return;
+    }
+
+    setIsPlaying((playing) => !playing);
   };
 
-  if (slides.length === 0) {
-    return (
-      <div
-        aria-hidden="true"
-        className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8"
-      >
-        <div className="aspect-square rounded-[20px] bg-white shadow-[0_10px_30px_rgba(0,0,0,0.06)]" />
-        <div className="hidden aspect-square rounded-[20px] bg-white shadow-[0_10px_30px_rgba(0,0,0,0.06)] md:block" />
-      </div>
-    );
-  }
+  const playbackLabel =
+    hasEnded || (!isPlaying && activeIndex >= slideCount - 1)
+      ? "Replay gallery"
+      : isPlaying
+        ? "Pause gallery"
+        : "Play gallery";
 
   return (
-    <div className="flex w-full flex-col">
-      <div className="overflow-hidden">
-        <AnimatePresence initial={false} custom={direction} mode="wait">
-          <motion.div
-            key={`${currentPage}-${perPage}`}
-            custom={direction}
-            variants={pairVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ type: "spring", stiffness: 280, damping: 32, mass: 0.7 }}
-            className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8"
-          >
-            {visibleSlides.map((src, offset) => {
-              const slideNumber = currentPage * perPage + offset + 1;
+    <section
+      className="flex w-full min-w-0 max-w-full flex-col gap-8 overflow-x-hidden"
+      aria-labelledby={labelId}
+      aria-roledescription="carousel"
+    >
+      <h2 id={labelId} className="sr-only">
+        {title} gallery
+      </h2>
+      <p className="sr-only" aria-live="polite">
+        Slide {activeIndex + 1} of {slideCount}
+      </p>
 
-              return (
+      <div
+        ref={viewportRef}
+        className="w-full min-w-0 max-w-full snap-x snap-mandatory overflow-x-auto overflow-y-hidden overscroll-x-contain [contain:inline-size] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        tabIndex={0}
+        onKeyDown={(event) => {
+          if (event.key === "ArrowRight") {
+            event.preventDefault();
+            goTo(Math.min(slideCount - 1, activeIndex + 1), {
+              userInitiated: true,
+            });
+          }
+          if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            goTo(Math.max(0, activeIndex - 1), { userInitiated: true });
+          }
+        }}
+      >
+        <ul
+          className={`flex w-max min-w-full gap-5 px-5 sm:px-8 lg:px-[50px] ${
+            fitsAll ? "justify-center" : "justify-start"
+          }`}
+        >
+          {slides.map((index) => {
+            const src = slideSrcs[index];
+
+            return (
+              <li
+                key={src ?? index}
+                data-index={index}
+                className="size-[min(600px,calc(100vw-2.5rem))] shrink-0 snap-start sm:size-[min(600px,calc(100vw-4rem))] lg:size-[600px]"
+              >
                 <article
-                  key={src}
-                  className="relative aspect-square overflow-hidden rounded-[20px] bg-white shadow-[0_10px_30px_rgba(0,0,0,0.06)]"
+                  className="relative size-full overflow-hidden rounded-[28px]"
+                  style={
+                    src
+                      ? undefined
+                      : { backgroundColor: PLACEHOLDER_TONES[index] }
+                  }
                 >
-                  <Image
-                    src={src}
-                    alt={`${title} — slide ${slideNumber} of ${slides.length}`}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
+                  {src ? (
+                    <Image
+                      src={src}
+                      alt={`${title} — slide ${index + 1} of ${slideCount}`}
+                      fill
+                      className="object-cover object-center"
+                      sizes="(max-width: 1024px) 85vw, 600px"
+                    />
+                  ) : (
+                    <span className="sr-only">
+                      {title} — placeholder {index + 1} of {slideCount}
+                    </span>
+                  )}
                 </article>
-              );
-            })}
-          </motion.div>
-        </AnimatePresence>
+              </li>
+            );
+          })}
+        </ul>
       </div>
 
-      {pageCount > 1 ? (
-        <div className="mt-8 flex justify-center">
-          <div className="inline-flex items-center gap-4 rounded-full bg-[#F7F6F9] px-6 py-3 shadow-sm">
-            <button
-              type="button"
-              onClick={() => paginate(-1)}
-              aria-label="Previous images"
-              className="text-[#0A0127] transition-all hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[#FF0E00] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F7F6F9]"
-            >
-              <ArrowLeft size={24} strokeWidth={2} aria-hidden="true" />
-            </button>
+      {fitsAll ? null : (
+        <div className="flex items-center justify-center gap-3 px-5">
+          <div
+            className="flex h-14 items-center rounded-full bg-taupe/20 px-4"
+            role="group"
+            aria-label="Gallery slides"
+          >
+            {slides.map((index) => {
+              const isActive = index === activeIndex;
 
-            <div className="flex items-center gap-2.5" role="group" aria-label="Gallery pages">
-              {Array.from({ length: pageCount }, (_, index) => {
-                const isActive = index === currentPage;
-
-                return (
-                  <button
-                    key={index}
-                    type="button"
-                    aria-current={isActive ? "true" : undefined}
-                    aria-label={`Go to gallery page ${index + 1}`}
-                    onClick={() => goToPage(index)}
-                    className="flex items-center justify-center focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[#FF0E00] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F7F6F9]"
-                  >
-                    <span
-                      className={
-                        isActive
-                          ? "h-2 w-6 rounded-full bg-[#0A0127] transition-all"
-                          : "h-2 w-2 rounded-full bg-[#0A0127]/20 transition-all"
-                      }
-                    />
-                  </button>
-                );
-              })}
-            </div>
-
-            <button
-              type="button"
-              onClick={() => paginate(1)}
-              aria-label="Next images"
-              className="text-[#0A0127] transition-all hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[#FF0E00] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F7F6F9]"
-            >
-              <ArrowRight size={24} strokeWidth={2} aria-hidden="true" />
-            </button>
+              return (
+                <button
+                  key={index}
+                  type="button"
+                  aria-current={isActive ? "true" : undefined}
+                  aria-label={`Show gallery image ${index + 1}`}
+                  onClick={() => goTo(index, { userInitiated: true })}
+                  className="flex h-8 items-center justify-center px-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-taupe focus-visible:ring-offset-2 focus-visible:ring-offset-cream-1"
+                >
+                  {isActive ? (
+                    <span className="relative block h-[6px] w-7 overflow-hidden rounded-full bg-taupe/25">
+                      <span
+                        className={`gallery-progress-fill absolute inset-y-0 left-0 w-full rounded-full bg-taupe ${
+                          isPlaying && !hasEnded && !reduceMotion
+                            ? ""
+                            : "is-paused"
+                        } ${hasEnded ? "is-complete" : ""}`}
+                      />
+                    </span>
+                  ) : (
+                    <span className="block h-[6px] w-[6px] rounded-full bg-taupe/45" />
+                  )}
+                </button>
+              );
+            })}
           </div>
+
+          <button
+            type="button"
+            aria-label={playbackLabel}
+            onClick={togglePlayback}
+            className="flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-taupe/20 text-taupe transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--hero-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-cream-1"
+          >
+            {hasEnded || (!isPlaying && activeIndex >= slideCount - 1) ? (
+              <RotateCcw size={22} strokeWidth={2} aria-hidden="true" />
+            ) : isPlaying ? (
+              <Pause size={22} strokeWidth={2} aria-hidden="true" />
+            ) : (
+              <Play
+                size={22}
+                strokeWidth={2}
+                aria-hidden="true"
+                className="translate-x-px"
+              />
+            )}
+          </button>
         </div>
-      ) : null}
-    </div>
+      )}
+    </section>
   );
 }

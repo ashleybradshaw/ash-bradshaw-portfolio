@@ -66,7 +66,7 @@ export default async function ProjectPage({
     .slice(0, 2);
 
   return (
-    <article className="bg-cream-1 text-text-dark">
+    <article className="min-w-0 overflow-x-hidden bg-cream-1 text-text-dark">
       <header className="hero-canvas w-full pt-[72px] md:pt-[88px]">
         <div className={`${sectionShell} pb-12 pt-10 md:pb-16 lg:pt-12`}>
           <h1 className="max-w-[1320px] font-display text-[clamp(2.5rem,6vw,4.25rem)] font-bold uppercase leading-[1.2] tracking-[-0.01em] text-[var(--hero-text)] transition-colors duration-[400ms] ease-in-out">
@@ -145,11 +145,9 @@ export default async function ProjectPage({
 
       <section
         aria-label={`${project.title} gallery`}
-        className="w-full bg-cream-1 py-12"
+        className="w-full overflow-x-hidden bg-cream-1 py-12"
       >
-        <div className={sectionShell}>
-          <MorphSlider images={project.images} title={project.title} />
-        </div>
+        <MorphSlider images={project.images} title={project.title} />
       </section>
 
       <section aria-label="More work" className="w-full bg-cream-1">

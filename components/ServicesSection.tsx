@@ -60,9 +60,9 @@ export function ServicesSection() {
           title="End-to-end"
         />
 
-        {capabilities.map((item) => (
+        {capabilities.map((item, index) => (
           <div key={item.number}>
-            <CrosshairRail />
+            {index > 0 ? <CrosshairRail /> : null}
             <article className="grid grid-cols-1 items-center gap-8 py-6 lg:grid-cols-[minmax(0,463px)_minmax(0,322px)_minmax(0,428px)] lg:gap-[46px] lg:py-0 lg:min-h-[209px]">
               <div className="flex flex-col justify-center">
                 <p className="font-sans text-base font-bold leading-5 tracking-[-0.01em]">
@@ -90,7 +90,6 @@ export function ServicesSection() {
             </article>
           </div>
         ))}
-        <CrosshairRail />
       </div>
     </section>
   );

@@ -48,7 +48,7 @@ export function AboutSection({ hideHeader = false }: AboutSectionProps) {
               opportunities.
             </p>
             <div id="availability">
-              <CheckAvailabilityButton href="#availability" />
+              <CheckAvailabilityButton />
             </div>
             <h3 className="font-display text-base font-bold uppercase leading-6 tracking-[-0.01em] text-text-dark">
               Foundations &amp; Origins

@@ -11,7 +11,7 @@ import {
 } from "react";
 import { getRandomAccessiblePair } from "@/lib/accessibleColorPair";
 
-export const MASTER_HERO_TOKENS = {
+const MASTER_HERO_TOKENS = {
   bg: "#FF0E00",
   text: "#13014C",
   accent: "#13014C",
@@ -51,7 +51,7 @@ export function HeroTokensProvider({ children }: { children: ReactNode }) {
 
   return (
     <HeroTokensContext.Provider value={value}>
-      <div className="flex min-h-full flex-1 flex-col" style={style}>
+      <div className="flex min-h-full min-w-0 flex-1 flex-col" style={style}>
         {children}
       </div>
     </HeroTokensContext.Provider>

@@ -1,6 +1,7 @@
 import Image from "next/image";
-import type { Project } from "@/lib/projects";
+import type { Project } from "@/lib/content/types";
 import { OpenProjectLink } from "@/components/Buttons";
+import { typeBodyFlush, typeDeck } from "@/lib/typography";
 
 type ProjectCardProps = {
   project: Project;
@@ -21,13 +22,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
           sizes="(min-width: 1024px) 547px, 100vw"
         />
       </div>
-      <div className="flex w-full flex-col">
-        <h3 className="font-display text-[28px] font-bold uppercase leading-9 tracking-[-0.01em]">
-          {project.title}
-        </h3>
-        <p className="font-sans text-base font-bold leading-6 tracking-[-0.01em]">
-          {project.hookSummary}
-        </p>
+      <div className="flex w-full flex-col gap-3">
+        <h3 className={typeDeck}>{project.title}</h3>
+        <p className={typeBodyFlush}>{project.hookSummary}</p>
       </div>
       <OpenProjectLink href={`/works/${project.slug}`} className="mt-1" />
     </article>

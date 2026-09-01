@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { AboutSection } from "@/components/AboutSection";
 import { PixelDivider } from "@/components/PixelDivider";
 import { SectionHeader } from "@/components/SectionHeader";
+import { getAbout } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "About — Ashley Bradshaw",
@@ -10,6 +11,8 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
+  const about = getAbout();
+
   return (
     <>
       <section className="hero-canvas w-full pt-[72px] md:pt-[88px]">
@@ -20,8 +23,8 @@ export default function AboutPage() {
             tone="red"
             rule="after"
             titleId="about-page-title"
-            subtitle="About"
-            title="Walking the line"
+            subtitle={about.subtitle}
+            title={about.title}
           />
         </div>
       </section>

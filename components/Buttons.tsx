@@ -7,13 +7,17 @@ export const outlinedControlClass =
 const sprayedFillClass =
   "cursor-pointer bg-[var(--hero-accent)] text-[var(--hero-bg)] shadow-[0_4px_30px_color-mix(in_srgb,var(--hero-accent)_20%,transparent)] transition-[background-color,color,box-shadow,transform,opacity] duration-[400ms] ease-in-out hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--hero-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-cream-1";
 
-export function CheckAvailabilityButton() {
+export function CheckAvailabilityButton({
+  children = "Check Availability",
+}: {
+  children?: ReactNode;
+}) {
   return (
     <a
       href="#availability"
       className={`inline-flex items-center justify-center rounded-[4px] px-5 py-2.5 font-sans text-base font-bold uppercase leading-6 tracking-[-0.01em] ${sprayedFillClass}`}
     >
-      Check Availability
+      {children}
     </a>
   );
 }

@@ -2,37 +2,8 @@ import Image from "next/image";
 import { CrosshairRail } from "@/components/CrosshairRail";
 import { MotionSection } from "@/components/MotionSection";
 import { SectionHeader } from "@/components/SectionHeader";
-
-type Referral = {
-  quote: string;
-  name: string;
-  role: string;
-  avatar: string;
-};
-
-const referrals: readonly Referral[] = [
-  {
-    quote:
-      "Ashley was key to CredAbility’s growth, expertly turning complex data and research into intuitive designs.",
-    name: "David Selby",
-    role: "Senior Growth & Product Manager",
-    avatar: "/referrals/david-selby.png",
-  },
-  {
-    quote:
-      "Ashley instrumentally launched Gamer Wager, bringing sharp product thinking and clarity from sketch to final UI.",
-    name: "Rodrigo Blanc",
-    role: "Product Owner",
-    avatar: "/referrals/rodrigo-blanc.png",
-  },
-  {
-    quote:
-      "Ashley delivered two high-impact projects with incredible detail, always putting the user first with brilliant solutions.",
-    name: "Jack Latues",
-    role: "Latus Group CEO",
-    avatar: "/referrals/jack-latues.png",
-  },
-];
+import { getReferrals } from "@/lib/content";
+import { typeBody, typeBodyFlush } from "@/lib/typography";
 
 function QuoteMark() {
   return (
@@ -72,6 +43,8 @@ function QuoteMark() {
 }
 
 export function ReferralsSection() {
+  const referrals = getReferrals();
+
   return (
     <MotionSection
       aria-labelledby="referrals-title"
@@ -80,12 +53,12 @@ export function ReferralsSection() {
       <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-[50px]">
         <SectionHeader
           titleId="referrals-title"
-          subtitle="A few words from people I've worked with."
-          title="What they say"
+          subtitle={referrals.subtitle}
+          title={referrals.title}
         />
 
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-3 lg:gap-5">
-          {referrals.map((item) => (
+          {referrals.items.map((item) => (
             <figure
               key={item.name}
               className="flex flex-col items-start justify-center px-5"
@@ -93,7 +66,7 @@ export function ReferralsSection() {
               <div className="flex items-center py-5">
                 <QuoteMark />
               </div>
-              <blockquote className="font-sans text-base font-bold uppercase leading-5 tracking-[-0.01em] text-text-dark">
+              <blockquote className={`${typeBody} uppercase text-text-dark`}>
                 {item.quote}
               </blockquote>
               <figcaption className="flex items-center gap-2.5 py-5">
@@ -111,12 +84,8 @@ export function ReferralsSection() {
                   />
                 </span>
                 <span className="flex min-w-0 flex-col">
-                  <span className="font-sans text-base font-bold leading-6 tracking-[-0.01em] text-text-dark">
-                    {item.name}
-                  </span>
-                  <span className="font-sans text-base font-bold leading-6 tracking-[-0.01em] text-text-dark">
-                    {item.role}
-                  </span>
+                  <span className={typeBodyFlush}>{item.name}</span>
+                  <span className={typeBodyFlush}>{item.role}</span>
                 </span>
               </figcaption>
             </figure>

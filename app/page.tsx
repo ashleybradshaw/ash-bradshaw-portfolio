@@ -8,7 +8,8 @@ import { ReferralsSection } from "@/components/ReferralsSection";
 import { DottedRule, SectionHeader } from "@/components/SectionHeader";
 import { SelectedWorksGrid } from "@/components/SelectedWorksGrid";
 import { ServicesSection } from "@/components/ServicesSection";
-import { projects } from "@/lib/projects";
+import { getCareerArc, getHero, getProjects, getSelectedWorks } from "@/lib/content";
+import type { HeroCard } from "@/lib/content";
 
 const heroCardBase =
   "flex h-full min-h-[280px] w-full flex-col items-start gap-2.5 p-5";
@@ -23,7 +24,49 @@ const cardTitleClass =
 const cardBodyClass =
   "font-sans text-base font-bold leading-6 tracking-[-0.01em]";
 
+function isExternalHref(href: string) {
+  return href.startsWith("http://") || href.startsWith("https://");
+}
+
+function HeroCardArticle({ card }: { card: HeroCard }) {
+  const external = isExternalHref(card.href);
+  const cta = (
+    <OutlinedCta href={card.href} external={external} className="mt-auto">
+      {card.cta}
+    </OutlinedCta>
+  );
+
+  if (card.id === "core-philosophy") {
+    return (
+      <article className="relative flex h-full min-h-[280px] w-full flex-col overflow-hidden bg-[var(--hero-accent)] text-[var(--hero-bg)] transition-[background-color,color] duration-[400ms] ease-in-out">
+        <Iridescence className="pointer-events-none absolute inset-0 z-0 opacity-80" />
+        <div className="relative z-10 flex h-full min-h-[280px] flex-col items-start gap-2.5 p-5">
+          <h2 className={cardTitleClass}>{card.title}</h2>
+          <p className={cardBodyClass}>{card.body}</p>
+          {cta}
+        </div>
+      </article>
+    );
+  }
+
+  const surface =
+    card.id === "where-i-am" ? heroCardOutline : heroCardNavy;
+
+  return (
+    <article className={surface}>
+      <h2 className={cardTitleClass}>{card.title}</h2>
+      <p className={cardBodyClass}>{card.body}</p>
+      {cta}
+    </article>
+  );
+}
+
 export default function Home() {
+  const hero = getHero();
+  const careerArc = getCareerArc();
+  const selectedWorks = getSelectedWorks();
+  const projects = getProjects();
+
   return (
     <>
       <MotionSection
@@ -38,65 +81,14 @@ export default function Home() {
             tone="red"
             rule="after"
             titleId="hero-title"
-            subtitle="Product Lead & Design Engineer"
-            title="ASH BRADSHAW"
+            subtitle={hero.subtitle}
+            title={hero.title}
           />
 
           <div className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-2 xl:grid-cols-4">
-            <article className={heroCardNavy}>
-              <h2 className={cardTitleClass}>Who I Am</h2>
-              <p className={cardBodyClass}>
-                Product Lead &amp; Design Engineer with 11+ years shipping
-                enterprise SaaS, fintech, and health tech from zero-to-one
-                strategy down to production code.
-              </p>
-              <OutlinedCta href="#about" className="mt-auto">
-                About
-              </OutlinedCta>
-            </article>
-
-            <article className={heroCardOutline}>
-              <h2 className={cardTitleClass}>Where I Am</h2>
-              <p className={cardBodyClass}>
-                Leading product design with a new team at Lloyds Banking
-                Group, modernising stocks, shares, and pension platforms from
-                early ideation through to validation.
-              </p>
-              <OutlinedCta
-                href="https://www.linkedin.com/in/ashleyjohnbradshaw/"
-                external
-                className="mt-auto"
-              >
-                Linkedin
-              </OutlinedCta>
-            </article>
-
-            <article className="relative flex h-full min-h-[280px] w-full flex-col overflow-hidden bg-[var(--hero-accent)] text-[var(--hero-bg)] transition-[background-color,color] duration-[400ms] ease-in-out">
-              <Iridescence className="pointer-events-none absolute inset-0 z-0 opacity-80" />
-              <div className="relative z-10 flex h-full min-h-[280px] flex-col items-start gap-2.5 p-5">
-                <h2 className={cardTitleClass}>Core Philosophy</h2>
-                <p className={cardBodyClass}>
-                  Designing in the space where product meets human behaviour. I
-                  bypass wireframe overhead, translating green-lit designs
-                  straight into production code and PRDs.
-                </p>
-                <OutlinedCta href="/field-notes" className="mt-auto">
-                  Field Notes
-                </OutlinedCta>
-              </div>
-            </article>
-
-            <article className={heroCardNavy}>
-              <h2 className={cardTitleClass}>Case Study</h2>
-              <p className={cardBodyClass}>
-                Founding product designer leading creative for almost four
-                years, building the full product ecosystem, brand strategy,
-                and scaling the app from 0 to 2.5M users.
-              </p>
-              <OutlinedCta href="/works/credability" className="mt-auto">
-                Open Project
-              </OutlinedCta>
-            </article>
+            {hero.cards.map((card) => (
+              <HeroCardArticle key={card.id} card={card} />
+            ))}
           </div>
 
           <DottedRule tone="red" />
@@ -124,26 +116,33 @@ export default function Home() {
             />
             <div className="relative z-10 flex min-h-[609px] flex-col justify-end gap-5 px-8 pb-[50px] pt-8 lg:max-w-[660px] lg:px-10">
               <header className="flex flex-col">
-                <p className="font-sans text-[28px] font-bold uppercase leading-9 tracking-[-0.01em] text-[var(--hero-bg)]">
-                  Career Arc
-                </p>
+                {careerArc.kicker ? (
+                  <p className="font-sans text-[28px] font-bold uppercase leading-9 tracking-[-0.01em] text-[var(--hero-bg)]">
+                    {careerArc.kicker}
+                  </p>
+                ) : null}
                 <h2
                   id="career-arc-title"
                   className="font-display text-[clamp(2.75rem,6vw,4.25rem)] font-bold uppercase leading-[0.95] tracking-[-0.04em] text-[var(--hero-bg)]"
                 >
-                  SCALING THE STACK
+                  {careerArc.title}
                 </h2>
               </header>
-              <h3 className={`${cardTitleClass} text-[var(--hero-bg)]`}>
-                Enterprise & AI Integration
-              </h3>
-              <p className={`${cardBodyClass} text-[var(--hero-bg)]`}>
-                Today, I build for enterprise scale. By integrating advanced
-                LLM and agentic workflows (Cursor, Claude, Perplexity), I
-                collapse the discovery-to-code pipeline - delivering complete
-                frontends and PRDs that allow engineering teams to focus purely
-                on backend services.
-              </p>
+              {careerArc.heading ? (
+                <h3 className={`${cardTitleClass} text-[var(--hero-bg)]`}>
+                  {careerArc.heading}
+                </h3>
+              ) : null}
+              <div className="flex flex-col gap-6">
+                {careerArc.paragraphs.map((paragraph) => (
+                  <p
+                    key={paragraph}
+                    className={`${cardBodyClass} text-[var(--hero-bg)]`}
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -161,8 +160,8 @@ export default function Home() {
         <div className="mx-auto w-full max-w-[1440px] px-5 pb-16 sm:px-8 lg:px-[50px] lg:pb-24">
           <SectionHeader
             titleId="selected-works-title"
-            subtitle="Selected Works"
-            title="proof & Pudding."
+            subtitle={selectedWorks.subtitle}
+            title={selectedWorks.title}
           />
 
           <SelectedWorksGrid projects={projects} />

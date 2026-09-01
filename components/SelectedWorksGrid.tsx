@@ -1,5 +1,5 @@
 import { ProjectCard } from "@/components/ProjectCard";
-import type { Project } from "@/lib/projects";
+import type { Project } from "@/lib/content/types";
 
 type SelectedWorksGridProps = {
   projects: Project[];

@@ -3,6 +3,7 @@ import { Palanquin_Dark, Plus_Jakarta_Sans } from "next/font/google";
 import { Footer } from "@/components/Footer";
 import { HeroTokensProvider } from "@/components/HeroTokensProvider";
 import { Nav } from "@/components/Nav";
+import { getNav } from "@/lib/content";
 import "./globals.css";
 
 const palanquinDark = Palanquin_Dark({
@@ -25,6 +26,8 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  const nav = getNav();
+
   return (
     <html
       lang="en"
@@ -33,7 +36,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full flex-col bg-cream-1 font-sans text-text-dark">
         <HeroTokensProvider>
-          <Nav />
+          <Nav
+            primary={nav.primary}
+            secondary={nav.secondary}
+            sprayLabel={nav.sprayLabel}
+          />
           <main className="flex min-w-0 flex-1 flex-col bg-inherit">{children}</main>
           <Footer />
         </HeroTokensProvider>

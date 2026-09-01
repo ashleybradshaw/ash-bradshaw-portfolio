@@ -6,18 +6,24 @@ function pad(value: number) {
   return String(value).padStart(2, "0");
 }
 
-function formatGmtStamp(date: Date) {
-  const day = pad(date.getUTCDate());
-  const month = pad(date.getUTCMonth() + 1);
-  const year = date.getUTCFullYear();
+function formatGmtStamp(
+  date: Date,
+  location: string,
+  timezone: string,
+) {
   const hours = pad(date.getUTCHours());
   const minutes = pad(date.getUTCMinutes());
-  const seconds = pad(date.getUTCSeconds());
 
-  return `${day}/${month}/${year} • GMT • ${hours}:${minutes}:${seconds}`;
+  return `${location} • ${timezone} • ${hours}:${minutes}`;
 }
 
-export function LiveClock() {
+export function LiveClock({
+  location,
+  timezone,
+}: {
+  location: string;
+  timezone: string;
+}) {
   const [now, setNow] = useState<Date | null>(null);
 
   useEffect(() => {
@@ -27,12 +33,14 @@ export function LiveClock() {
     return () => window.clearInterval(id);
   }, []);
 
-  const stamp = now ? formatGmtStamp(now) : "DD/MM/YYYY • GMT • 00:00:00";
+  const stamp = now
+    ? formatGmtStamp(now, location, timezone)
+    : `${location} • ${timezone} • 00:00`;
 
   return (
     <time
       dateTime={now ? now.toISOString() : undefined}
-      aria-label="Current date and time in GMT"
+      aria-label={`Current time in ${location} (${timezone})`}
       suppressHydrationWarning
     >
       {stamp}

@@ -6,38 +6,7 @@ import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { BrandMark } from "@/components/BrandMark";
 import { HeroColorControls } from "@/components/HeroColorControls";
-
-type NavItem = {
-  href: string;
-  label: string;
-  external?: boolean;
-};
-
-const primaryLinks: readonly NavItem[] = [
-  { href: "#services", label: "Services" },
-  { href: "#works", label: "Works" },
-  { href: "#about", label: "About" },
-  { href: "/field-notes", label: "Field Notes" },
-];
-
-const secondaryLinks: readonly NavItem[] = [
-  {
-    href: "https://www.linkedin.com/in/ashleyjohnbradshaw/",
-    label: "Linkedin",
-    external: true,
-  },
-  {
-    href: "https://github.com/ashleybradshaw",
-    label: "Github",
-    external: true,
-  },
-  {
-    href: "https://x.com/ashjonbradshaw",
-    label: "X",
-    external: true,
-  },
-  { href: "#availability", label: "Availability" },
-];
+import type { NavLink } from "@/lib/content/types";
 
 const overlayVariants = {
   hidden: { opacity: 0 },
@@ -71,7 +40,7 @@ const pillSpring = {
   mass: 0.45,
 };
 
-function resolveHref(item: NavItem) {
+function resolveHref(item: NavLink) {
   return item.href.startsWith("#") ? `/${item.href}` : item.href;
 }
 
@@ -80,7 +49,7 @@ function NavAnchor({
   className,
   onClick,
 }: {
-  item: NavItem;
+  item: NavLink;
   className: string;
   onClick?: () => void;
 }) {
@@ -122,7 +91,7 @@ function NavCluster({
   pillClassName,
   linkClassName,
 }: {
-  items: readonly NavItem[];
+  items: readonly NavLink[];
   hovered: string | null;
   onHover: (href: string | null) => void;
   pillClassName: string;
@@ -151,7 +120,15 @@ function NavCluster({
   );
 }
 
-export function Nav() {
+export function Nav({
+  primary,
+  secondary,
+  sprayLabel,
+}: {
+  primary: readonly NavLink[];
+  secondary: readonly NavLink[];
+  sprayLabel: string;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
@@ -225,7 +202,7 @@ export function Nav() {
   }, [isOpen]);
 
   const closeMenu = () => setIsOpen(false);
-  const allLinks = [...primaryLinks, ...secondaryLinks];
+  const allLinks = [...primary, ...secondary];
 
   return (
     <>
@@ -245,7 +222,7 @@ export function Nav() {
           <LayoutGroup>
             <div className="ml-auto hidden items-center gap-5 lg:flex xl:ml-0">
               <NavCluster
-                items={primaryLinks}
+                items={primary}
                 hovered={hovered}
                 onHover={setHovered}
                 pillClassName={pillClassName}
@@ -258,19 +235,19 @@ export function Nav() {
               />
 
               <NavCluster
-                items={secondaryLinks}
+                items={secondary}
                 hovered={hovered}
                 onHover={setHovered}
                 pillClassName={pillClassName}
                 linkClassName={linkClassName}
               />
 
-              <HeroColorControls />
+              <HeroColorControls label={sprayLabel} />
             </div>
           </LayoutGroup>
 
           <div className="ml-auto flex items-center gap-3 lg:hidden">
-            <HeroColorControls compact />
+            <HeroColorControls compact label={sprayLabel} />
             <button
               type="button"
               className={menuButtonClassName}
@@ -320,7 +297,7 @@ export function Nav() {
                 </motion.li>
               ))}
               <motion.li variants={itemVariants} className="pt-4">
-                <HeroColorControls />
+                <HeroColorControls label={sprayLabel} />
               </motion.li>
             </motion.ul>
           </motion.div>

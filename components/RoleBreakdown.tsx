@@ -1,13 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  experienceRoles,
-  type ExperienceRole,
-  type RoleBadge,
-} from "@/lib/experience";
-
-const DEFAULT_OPEN_ID = experienceRoles[0].id;
+import type { ExperienceRole, RoleBadge } from "@/lib/content/types";
 
 function Badge({ type }: { type: RoleBadge }) {
   if (type === "current") {
@@ -142,9 +136,9 @@ function RoleItem({
       >
         <div className="flex items-start justify-between gap-4">
           <div className="flex min-w-0 flex-wrap items-center gap-2">
-            <h3 className="font-display text-base font-bold uppercase leading-6 tracking-[-0.01em]">
+            <span className="font-display text-base font-bold uppercase leading-6 tracking-[-0.01em]">
               {role.title}
-            </h3>
+            </span>
             {role.badges.map((badge) => (
               <Badge key={badge} type={badge} />
             ))}
@@ -174,7 +168,7 @@ function RoleItem({
         }`}
       >
         <div className="min-h-0 overflow-hidden">
-          <ul className="w-full max-w-[580px] space-y-4 pt-[30px] font-sans text-base font-normal leading-6 tracking-[-0.01em] text-taupe">
+          <ul className="w-full max-w-[65ch] space-y-5 pt-[30px] font-sans text-base font-normal leading-[1.7] tracking-[-0.01em] text-taupe">
             {role.bulletPoints.map((item) => (
               <li key={item} className="grid grid-cols-[1.25em_minmax(0,1fr)]">
                 <span className="shrink-0" aria-hidden="true">
@@ -194,9 +188,9 @@ function RoleItem({
   );
 }
 
-export function RoleBreakdown() {
+export function RoleBreakdown({ roles }: { roles: readonly ExperienceRole[] }) {
   const [openIds, setOpenIds] = useState<ReadonlySet<string>>(
-    () => new Set([DEFAULT_OPEN_ID]),
+    () => new Set(roles[0] ? [roles[0].id] : []),
   );
 
   const toggle = (id: string) => {
@@ -213,7 +207,7 @@ export function RoleBreakdown() {
 
   return (
     <div className="flex w-full max-w-[620px] flex-col">
-      {experienceRoles.map((role) => (
+      {roles.map((role) => (
         <RoleItem
           key={role.id}
           role={role}

@@ -12,8 +12,10 @@ const SPRAY_DURATION = 1.15;
 
 export function HeroColorControls({
   compact = false,
+  label = "Spray",
 }: {
   compact?: boolean;
+  label?: string;
 }) {
   const { randomize } = useHeroTokens();
   const iconRef = useRef<SprayCanIconHandle>(null);
@@ -41,7 +43,7 @@ export function HeroColorControls({
           isAnimated
           className="pointer-events-none shrink-0"
         />
-        Spray
+        {label}
       </span>
       <span aria-hidden="true" className="spray-shine-wash" />
       <span aria-hidden="true" className="spray-shine-edge" />

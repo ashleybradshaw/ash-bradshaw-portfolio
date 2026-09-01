@@ -103,8 +103,8 @@ export const projects: Project[] = [
         "V1 Architecture structured to scale seamlessly into V2 features (leaderboards and social challenges) without requiring a rebuild.",
       ],
     },
-    heroImage: projectHeroImage("repdaily"),
-    images: projectImages("repdaily", 6),
+    heroImage: projectHeroImage("repdaily", "webp"),
+    images: projectImages("repdaily", 10, "webp"),
   },
   {
     slug: "readygo",
@@ -130,8 +130,8 @@ export const projects: Project[] = [
         "Supported by a structured usability programme capturing contextual, in-app feedback from early users.",
       ],
     },
-    heroImage: projectHeroImage("readygo"),
-    images: projectImages("readygo", 6),
+    heroImage: projectHeroImage("readygo", "webp"),
+    images: projectImages("readygo", 8, "webp"),
   },
   {
     slug: "gamer-wager",
@@ -157,9 +157,9 @@ export const projects: Project[] = [
         "Culture-first UI that still reads as a regulated fintech product.",
       ],
     },
-    heroImage: projectHeroImage("gamer-wager"),
+    heroImage: projectHeroImage("gamer-wager", "webp"),
     objectPosition: "65% 50%",
-    images: [projectHeroImage("gamer-wager")],
+    images: projectImages("gamer-wager", 7, "webp"),
   },
   {
     slug: "emma-finance",
@@ -185,9 +185,9 @@ export const projects: Project[] = [
         "Visual system designed to sit inside an existing money-management brand.",
       ],
     },
-    heroImage: projectHeroImage("emma-finance"),
+    heroImage: projectHeroImage("emma-finance", "webp"),
     objectPosition: "center center",
-    images: [projectHeroImage("emma-finance")],
+    images: projectImages("emma-finance", 3, "webp"),
   },
   {
     slug: "reebok-zoku-runner",
@@ -213,9 +213,9 @@ export const projects: Project[] = [
         "Campaign language held together across UK, USA, and Australia.",
       ],
     },
-    heroImage: projectHeroImage("reebok-zoku-runner"),
+    heroImage: projectHeroImage("reebok-zoku-runner", "webp"),
     objectPosition: "center center",
-    images: [projectHeroImage("reebok-zoku-runner")],
+    images: projectImages("reebok-zoku-runner", 9, "webp"),
   },
 ];
 

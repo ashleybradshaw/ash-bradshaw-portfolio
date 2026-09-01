@@ -16,7 +16,7 @@ type MorphSliderProps = {
   title: string;
 };
 
-const MAX_SLIDES = 8;
+const MAX_SLIDES = 10;
 const AUTO_MS = 6000;
 const PLACEHOLDER_TONES = [
   "#d6d6d6",
@@ -27,6 +27,8 @@ const PLACEHOLDER_TONES = [
   "#989898",
   "#8c8c8c",
   "#808080",
+  "#747474",
+  "#686868",
 ] as const;
 
 export function MorphSlider({ images, title }: MorphSliderProps) {

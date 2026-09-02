@@ -1,25 +1,9 @@
 "use client";
 
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { Modal } from "@/components/Modal";
 
 const FIELD_NOTES_HREF = "/field-notes";
-
-type FieldNotesContextValue = {
-  open: boolean;
-  openFieldNotes: () => void;
-  closeFieldNotes: () => void;
-};
-
-const FieldNotesContext = createContext<FieldNotesContextValue | null>(null);
 
 function isFieldNotesAnchor(node: EventTarget | null): HTMLAnchorElement | null {
   if (!(node instanceof Element)) {
@@ -79,13 +63,8 @@ export function FieldNotesProvider({ children }: { children: ReactNode }) {
     return () => document.removeEventListener("click", onClick, true);
   }, [openFieldNotes]);
 
-  const value = useMemo(
-    () => ({ open, openFieldNotes, closeFieldNotes }),
-    [open, openFieldNotes, closeFieldNotes],
-  );
-
   return (
-    <FieldNotesContext.Provider value={value}>
+    <>
       {children}
       <Modal
         open={open}
@@ -105,15 +84,6 @@ export function FieldNotesProvider({ children }: { children: ReactNode }) {
           Got it, I’ll check back
         </button>
       </Modal>
-    </FieldNotesContext.Provider>
+    </>
   );
-}
-
-export function useFieldNotesModal() {
-  const context = useContext(FieldNotesContext);
-  if (!context) {
-    throw new Error("useFieldNotesModal must be used within FieldNotesProvider");
-  }
-
-  return context;
 }

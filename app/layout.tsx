@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Palanquin_Dark, Plus_Jakarta_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { AvailabilityProvider } from "@/components/AvailabilityModal";
 import { FieldNotesProvider } from "@/components/FieldNotesModal";
 import { Footer } from "@/components/Footer";
 import { HeroTokensProvider } from "@/components/HeroTokensProvider";
@@ -17,7 +18,7 @@ const palanquinDark = Palanquin_Dark({
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: ["400", "700"],
   variable: "--font-plus-jakarta",
   display: "swap",
 });
@@ -42,13 +43,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col bg-cream-1 font-sans text-text-dark">
         <HeroTokensProvider>
           <FieldNotesProvider>
-            <Nav
-              primary={nav.primary}
-              secondary={nav.secondary}
-              sprayLabel={nav.sprayLabel}
-            />
-            <main className="flex min-w-0 flex-1 flex-col bg-inherit">{children}</main>
-            <Footer />
+            <AvailabilityProvider>
+              <Nav
+                primary={nav.primary}
+                secondary={nav.secondary}
+                sprayLabel={nav.sprayLabel}
+              />
+              <main className="flex min-w-0 flex-1 flex-col bg-inherit">
+                {children}
+              </main>
+              <Footer />
+            </AvailabilityProvider>
           </FieldNotesProvider>
         </HeroTokensProvider>
         <Analytics />

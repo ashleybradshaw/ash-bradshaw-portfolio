@@ -41,9 +41,11 @@ export function MorphSlider({ images, title }: MorphSliderProps) {
   const slides = Array.from({ length: slideCount }, (_, index) => index);
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [hasEnded, setHasEnded] = useState(false);
   const [fitsAll, setFitsAll] = useState(false);
+  const autoplayAllowed = !reduceMotion && !fitsAll;
+  const playing = isPlaying && autoplayAllowed;
 
   const measureOverflow = useCallback(() => {
     const viewport = viewportRef.current;
@@ -126,15 +128,6 @@ export function MorphSlider({ images, title }: MorphSliderProps) {
   }, [measureOverflow, slideCount]);
 
   useEffect(() => {
-    if (reduceMotion || fitsAll) {
-      setIsPlaying(false);
-      return;
-    }
-
-    setIsPlaying(true);
-  }, [fitsAll, reduceMotion]);
-
-  useEffect(() => {
     const viewport = viewportRef.current;
     if (!viewport) {
       return;
@@ -156,7 +149,7 @@ export function MorphSlider({ images, title }: MorphSliderProps) {
   }, [syncIndexFromScroll]);
 
   useEffect(() => {
-    if (!isPlaying || reduceMotion || hasEnded || fitsAll) {
+    if (!playing || hasEnded) {
       return;
     }
 
@@ -173,11 +166,9 @@ export function MorphSlider({ images, title }: MorphSliderProps) {
     return () => window.clearTimeout(timer);
   }, [
     activeIndex,
-    fitsAll,
     goTo,
     hasEnded,
-    isPlaying,
-    reduceMotion,
+    playing,
     slideCount,
   ]);
 
@@ -191,13 +182,13 @@ export function MorphSlider({ images, title }: MorphSliderProps) {
       return;
     }
 
-    setIsPlaying((playing) => !playing);
+    setIsPlaying((current) => !current);
   };
 
   const playbackLabel =
-    hasEnded || (!isPlaying && activeIndex >= slideCount - 1)
+    hasEnded || (!playing && activeIndex >= slideCount - 1)
       ? "Replay gallery"
-      : isPlaying
+      : playing
         ? "Pause gallery"
         : "Play gallery";
 
@@ -296,7 +287,7 @@ export function MorphSlider({ images, title }: MorphSliderProps) {
                     <span className="relative block h-[6px] w-7 overflow-hidden rounded-full bg-taupe">
                       <span
                         className={`gallery-progress-fill absolute inset-y-0 left-0 w-full rounded-full bg-[color-mix(in_srgb,var(--color-taupe),var(--color-text-dark)_40%)] ${
-                          isPlaying && !hasEnded && !reduceMotion
+                          playing && !hasEnded
                             ? ""
                             : "is-paused"
                         } ${hasEnded ? "is-complete" : ""}`}
@@ -316,9 +307,9 @@ export function MorphSlider({ images, title }: MorphSliderProps) {
             onClick={togglePlayback}
             className="flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-taupe/20 text-taupe transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--hero-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-cream-1"
           >
-            {hasEnded || (!isPlaying && activeIndex >= slideCount - 1) ? (
+            {hasEnded || (!playing && activeIndex >= slideCount - 1) ? (
               <RotateCcw size={22} strokeWidth={2} aria-hidden="true" />
-            ) : isPlaying ? (
+            ) : playing ? (
               <Pause size={22} strokeWidth={2} aria-hidden="true" />
             ) : (
               <Play

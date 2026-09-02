@@ -1,8 +1,5 @@
 /** Shared type tokens so body copy stays readable across pages. */
 
-/** ~65 characters: comfortable line length for editorial blocks. */
-export const typeMeasure = "max-w-[65ch]";
-
 /** Body copy: 16px, 1.7 leading, 65ch measure. */
 export const typeBody =
   "max-w-[65ch] font-sans text-base font-bold leading-[1.7] tracking-[-0.01em]";

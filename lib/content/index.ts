@@ -1,24 +1,4 @@
-export type {
-  AboutContent,
-  CareerArcContent,
-  ExperienceContent,
-  ExperienceRole,
-  FooterContent,
-  HeroCard,
-  HeroContent,
-  NavContent,
-  NavLink,
-  Project,
-  ProjectLink,
-  ProjectSection,
-  ProjectSlug,
-  Referral,
-  ReferralsContent,
-  RoleBadge,
-  SectionHeading,
-  ServiceItem,
-  ServicesContent,
-} from "@/lib/content/types";
+export type { HeroCard } from "@/lib/content/types";
 
 export {
   getAbout,

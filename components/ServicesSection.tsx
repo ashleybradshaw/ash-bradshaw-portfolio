@@ -2,7 +2,7 @@ import Image from "next/image";
 import { CrosshairRail } from "@/components/CrosshairRail";
 import { SectionHeader } from "@/components/SectionHeader";
 import { getServices } from "@/lib/content";
-import { typeBody, typeDeck, typeBodyFlush } from "@/lib/typography";
+import { typeDeck, typeBodyFlush } from "@/lib/typography";
 
 export function ServicesSection() {
   const services = getServices();

@@ -7,6 +7,7 @@ import { Menu, X } from "lucide-react";
 import { BrandMark } from "@/components/BrandMark";
 import { HeroColorControls } from "@/components/HeroColorControls";
 import type { NavLink } from "@/lib/content/types";
+import { isAvailabilityHref } from "@/lib/site";
 
 const overlayVariants = {
   hidden: { opacity: 0 },
@@ -69,6 +70,12 @@ function NavAnchor({
     );
   }
 
+  const availabilityProps = isAvailabilityHref(href)
+    ? ({ "aria-haspopup": "dialog" as const } satisfies {
+        "aria-haspopup": "dialog";
+      })
+    : {};
+
   if (!href.includes("#")) {
     return (
       <Link href={href} onClick={onClick} className={className}>
@@ -78,7 +85,7 @@ function NavAnchor({
   }
 
   return (
-    <a href={href} className={className} onClick={onClick}>
+    <a href={href} className={className} onClick={onClick} {...availabilityProps}>
       {item.label}
     </a>
   );

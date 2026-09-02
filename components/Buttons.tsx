@@ -15,6 +15,8 @@ export function CheckAvailabilityButton({
   return (
     <a
       href="#availability"
+      data-availability-modal=""
+      aria-haspopup="dialog"
       className={`inline-flex items-center justify-center rounded-[4px] px-5 py-2.5 font-sans text-base font-bold uppercase leading-6 tracking-[-0.01em] ${sprayedFillClass}`}
     >
       {children}

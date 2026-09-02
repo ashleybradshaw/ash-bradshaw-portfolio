@@ -51,7 +51,11 @@ export function Footer() {
               {footer.fieldNotes.label}
             </Link>
           ) : null}
-          <Link href="/#availability" className={linkClass}>
+          <Link
+            href="/#availability"
+            aria-haspopup="dialog"
+            className={linkClass}
+          >
             {footer.availabilityCta}
           </Link>
         </div>

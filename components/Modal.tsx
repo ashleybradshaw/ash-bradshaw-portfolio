@@ -4,20 +4,42 @@ import {
   useEffect,
   useId,
   useRef,
-  useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useHeroTokens } from "@/components/HeroTokensProvider";
 
+type ModalSize = "compact" | "wide";
+
 type ModalProps = {
   open: boolean;
   onClose: () => void;
   title: string;
   titleId?: string;
+  describedBy?: string;
+  size?: ModalSize;
   children: ReactNode;
 };
+
+const compactPanelClassName =
+  "relative flex h-dvh w-full flex-col overflow-hidden bg-[linear-gradient(165deg,#13014C_0%,#0A0127_100%)] text-cream-1 md:h-auto md:max-h-[min(640px,calc(100dvh-3rem))] md:w-full md:max-w-[540px] md:rounded-[4px] md:shadow-[0_24px_80px_rgb(10_1_39/0.55)]";
+
+const widePanelClassName =
+  "relative flex h-dvh w-full flex-col overflow-hidden border-t border-cream-1/40 bg-[linear-gradient(165deg,#13014C_0%,#0A0127_100%)] text-cream-1 shadow-[0_24px_80px_rgb(10_1_39/0.55)] md:h-[min(920px,calc(100dvh-3rem))] md:max-h-[calc(100dvh-3rem)] md:w-full md:max-w-[min(1080px,calc(100vw-3rem))] md:rounded-[4px] md:border";
+
+const compactBodyClassName =
+  "relative z-[1] flex flex-1 flex-col justify-center px-8 py-24 md:px-10 md:py-14";
+
+const wideBodyClassName =
+  "relative z-[1] flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-5 pb-8 pt-20 md:px-8 md:pt-16 md:pb-8";
+
+const subscribeNever = () => () => {};
+
+function useIsClient() {
+  return useSyncExternalStore(subscribeNever, () => true, () => false);
+}
 
 function CloseGlyph() {
   return (
@@ -33,18 +55,16 @@ export function Modal({
   onClose,
   title,
   titleId,
+  describedBy,
+  size = "compact",
   children,
 }: ModalProps) {
   const generatedId = useId();
   const headingId = titleId ?? generatedId;
   const closeRef = useRef<HTMLButtonElement>(null);
   const previousFocus = useRef<HTMLElement | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useIsClient();
   const { tokens } = useHeroTokens();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     if (!open) {
@@ -117,7 +137,8 @@ export function Modal({
             role="dialog"
             aria-modal="true"
             aria-labelledby={headingId}
-            className="relative flex h-dvh w-full flex-col overflow-hidden bg-[linear-gradient(165deg,#13014C_0%,#0A0127_100%)] text-cream-1 md:h-auto md:max-h-[min(640px,calc(100dvh-3rem))] md:w-full md:max-w-[540px] md:rounded-[4px] md:shadow-[0_24px_80px_rgb(10_1_39/0.55)]"
+            aria-describedby={describedBy}
+            className={size === "wide" ? widePanelClassName : compactPanelClassName}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 12 }}
@@ -142,14 +163,31 @@ export function Modal({
               <CloseGlyph />
             </button>
 
-            <div className="relative z-[1] flex flex-1 flex-col justify-center px-8 py-24 md:px-10 md:py-14">
-              <h2
-                id={headingId}
-                className="font-display text-base font-bold uppercase leading-6 tracking-[-0.01em]"
-              >
-                {title}
-              </h2>
-              <div className="mt-2 flex flex-col gap-8">{children}</div>
+            {size === "wide" ? (
+              <div
+                aria-hidden="true"
+                className="absolute top-3 left-1/2 z-10 h-1 w-10 -translate-x-1/2 rounded-full bg-cream-1/35 md:hidden"
+              />
+            ) : null}
+
+            <div
+              className={
+                size === "wide" ? wideBodyClassName : compactBodyClassName
+              }
+            >
+              {size === "wide" ? (
+                children
+              ) : (
+                <>
+                  <h2
+                    id={headingId}
+                    className="font-display text-base font-bold uppercase leading-6 tracking-[-0.01em]"
+                  >
+                    {title}
+                  </h2>
+                  <div className="mt-2 flex flex-col gap-8">{children}</div>
+                </>
+              )}
             </div>
           </motion.div>
         </motion.div>

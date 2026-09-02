@@ -97,6 +97,7 @@ export type FooterContent = {
   location: string;
   timezone: string;
   availabilityCta: string;
+  fieldNotes?: NavLink;
   social: NavLink[];
 };
 

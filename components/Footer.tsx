@@ -46,6 +46,11 @@ export function Footer() {
               {item.label}
             </a>
           ))}
+          {footer.fieldNotes ? (
+            <Link href={footer.fieldNotes.href} className={linkClass}>
+              {footer.fieldNotes.label}
+            </Link>
+          ) : null}
           <Link href="/#availability" className={linkClass}>
             {footer.availabilityCta}
           </Link>

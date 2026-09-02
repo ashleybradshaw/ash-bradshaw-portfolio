@@ -315,6 +315,9 @@ export const getExperience = cache((): ExperienceContent => {
 
 export const getFooter = cache((): FooterContent => {
   const { data } = readMarkdown("footer.md");
+  const fieldNotesRecord = (data.fieldNotes ?? {}) as Record<string, unknown>;
+  const fieldNotesHref = asString(fieldNotesRecord.href);
+  const fieldNotesLabel = asString(fieldNotesRecord.label);
 
   return {
     brand: asString(data.brand),
@@ -322,6 +325,14 @@ export const getFooter = cache((): FooterContent => {
     location: asString(data.location),
     timezone: asString(data.timezone, "GMT"),
     availabilityCta: asString(data.availabilityCta, "Check Availability"),
+    ...(fieldNotesHref && fieldNotesLabel
+      ? {
+          fieldNotes: {
+            href: fieldNotesHref,
+            label: fieldNotesLabel,
+          },
+        }
+      : {}),
     social: asLinks(data.social),
   };
 });

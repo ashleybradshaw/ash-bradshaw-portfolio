@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Palanquin_Dark, Plus_Jakarta_Sans } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { FieldNotesProvider } from "@/components/FieldNotesModal";
 import { Footer } from "@/components/Footer";
 import { HeroTokensProvider } from "@/components/HeroTokensProvider";
@@ -50,6 +51,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Footer />
           </FieldNotesProvider>
         </HeroTokensProvider>
+        <Analytics />
       </body>
     </html>
   );

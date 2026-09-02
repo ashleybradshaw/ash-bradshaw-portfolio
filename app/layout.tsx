@@ -23,6 +23,9 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "Ashley Bradshaw",
   description: "Product designer and builder. Selected works, services, and field notes.",
+  verification: {
+    google: "8txJZflvvG6xWCBHpgXBkijL1y6mxRtya5mCB16swTg",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

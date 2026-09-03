@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { HeroTokensProvider } from "@/components/HeroTokensProvider";
 import { Nav } from "@/components/Nav";
 import { getNav } from "@/lib/content";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const palanquinDark = Palanquin_Dark({
@@ -24,6 +25,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Ashley Bradshaw",
   description: "Product designer and builder. Selected works, services, and field notes.",
   verification: {

@@ -44,43 +44,39 @@ function resolveHref(item: NavLink) {
   return item.href.startsWith("#") ? `/${item.href}` : item.href;
 }
 
-/** Two bars → X via CSS transform. view-box origin keeps strokes from collapsing/clipping mid-morph. */
+/** Two bars → X. Absolute bars + matching transform stacks so open/close reverse cleanly. */
 function MenuIcon({ open }: { open: boolean }) {
-  const barStyle = (openTransform: string): CSSProperties => ({
-    transformBox: "view-box",
-    transformOrigin: "center",
-    transform: open ? openTransform : "none",
+  const barStyle = (openTransform: string, closedTransform: string): CSSProperties => ({
+    position: "absolute",
+    left: "50%",
+    top: "50%",
+    display: "block",
+    width: 14,
+    height: 1.5,
+    borderRadius: 9999,
+    backgroundColor: "currentColor",
+    transform: open ? openTransform : closedTransform,
     transition: "transform 200ms ease-out",
   });
 
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      width="24"
-      height="24"
-      fill="none"
+    <span
       aria-hidden="true"
-      focusable="false"
-      className="size-6 overflow-visible motion-reduce:[&_path]:transition-none"
+      className="relative block size-6 overflow-visible motion-reduce:[&>span]:transition-none"
     >
-      <path
-        d="M5 8 H19"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-        style={barStyle("translateY(4px) rotate(45deg)")}
+      <span
+        style={barStyle(
+          "translate(-50%, -50%) rotate(45deg)",
+          "translate(-50%, calc(-50% - 4px))",
+        )}
       />
-      <path
-        d="M5 16 H19"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-        style={barStyle("translateY(-4px) rotate(-45deg)")}
+      <span
+        style={barStyle(
+          "translate(-50%, -50%) rotate(-45deg)",
+          "translate(-50%, calc(-50% + 4px))",
+        )}
       />
-    </svg>
+    </span>
   );
 }
 

@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
 import { BrandMark } from "@/components/BrandMark";
 import { HeroColorControls } from "@/components/HeroColorControls";
 import type { NavLink } from "@/lib/content/types";
@@ -43,6 +42,46 @@ const pillSpring = {
 
 function resolveHref(item: NavLink) {
   return item.href.startsWith("#") ? `/${item.href}` : item.href;
+}
+
+/** Two bars → X via CSS transform. view-box origin keeps strokes from collapsing/clipping mid-morph. */
+function MenuIcon({ open }: { open: boolean }) {
+  const barStyle = (openTransform: string): CSSProperties => ({
+    transformBox: "view-box",
+    transformOrigin: "center",
+    transform: open ? openTransform : "none",
+    transition: "transform 200ms ease-out",
+  });
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width="24"
+      height="24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+      className="size-6 overflow-visible motion-reduce:[&_path]:transition-none"
+    >
+      <path
+        d="M5 8 H19"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+        style={barStyle("translateY(4px) rotate(45deg)")}
+      />
+      <path
+        d="M5 16 H19"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+        style={barStyle("translateY(-4px) rotate(-45deg)")}
+      />
+    </svg>
+  );
 }
 
 function NavAnchor({
@@ -167,7 +206,7 @@ export function Nav({
     "absolute inset-0 rounded-[4px] bg-[color-mix(in_srgb,var(--hero-text)_18%,transparent)]";
 
   const menuButtonClassName =
-    "inline-flex items-center justify-center text-[var(--hero-text)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--hero-accent)] focus-visible:ring-offset-2 lg:hidden";
+    "inline-flex size-8 shrink-0 items-center justify-center overflow-visible rounded-[4px] text-[var(--hero-text)] transition-[background-color,transform,color] duration-200 ease-out hover:bg-[color-mix(in_srgb,var(--hero-text)_8%,transparent)] active:scale-[0.99] active:bg-[color-mix(in_srgb,var(--hero-text)_12%,transparent)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--hero-accent)] focus-visible:ring-offset-2 motion-reduce:active:scale-100 lg:hidden";
 
   const overlayClassName =
     "fixed inset-0 z-40 flex flex-col bg-[var(--hero-bg)] text-[var(--hero-text)] transition-[background-color,color] duration-[400ms] ease-in-out lg:hidden";
@@ -263,11 +302,7 @@ export function Nav({
               aria-label={isOpen ? "Close menu" : "Open menu"}
               onClick={() => setIsOpen((open) => !open)}
             >
-              {isOpen ? (
-                <X size={24} strokeWidth={2} aria-hidden="true" />
-              ) : (
-                <Menu size={24} strokeWidth={2} aria-hidden="true" />
-              )}
+              <MenuIcon open={isOpen} />
             </button>
           </div>
         </nav>
